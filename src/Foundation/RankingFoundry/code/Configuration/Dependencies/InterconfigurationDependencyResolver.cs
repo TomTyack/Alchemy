@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Unicorn.Configuration.Dependencies
+namespace Sitecore.Foundation.RankingFoundry.Configuration.Dependencies
 {
 	public class InterconfigurationDependencyResolver
 	{

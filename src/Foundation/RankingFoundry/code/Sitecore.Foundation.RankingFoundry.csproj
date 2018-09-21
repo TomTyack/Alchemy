@@ -51,6 +51,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.Extensions.DependencyInjection.1.0.0\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -97,22 +103,53 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Unicorn, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Unicorn.Core.4.0.0\lib\net452\Unicorn.dll</HintPath>
-    </Reference>
-    <Reference Include="Unicorn.Roles, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Unicorn.Roles.Core.4.0.0\lib\net452\Unicorn.Roles.dll</HintPath>
-    </Reference>
-    <Reference Include="Unicorn.Users, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Unicorn.Users.Core.4.0.0\lib\net452\Unicorn.Users.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigurationUtility.cs" />
+    <Compile Include="Configuration\Dependencies\ConfigurationDependencyResolver.cs" />
+    <Compile Include="Configuration\Dependencies\ExplicitConfigurationDependency.cs" />
+    <Compile Include="Configuration\Dependencies\IConfigurationDependency.cs" />
+    <Compile Include="Configuration\Dependencies\ImplicitConfigurationDependency.cs" />
+    <Compile Include="Configuration\Dependencies\InterconfigurationDependencyResolver.cs" />
+    <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="Configuration\IConfigurationProvider.cs" />
+    <Compile Include="Configuration\MicroConfiguration.cs" />
+    <Compile Include="Configuration\PipelineBasedVariablesReplacer.cs" />
+    <Compile Include="Configuration\ReadOnlyConfiguration.cs" />
+    <Compile Include="Configuration\UnicornConfigurationManager.cs" />
+    <Compile Include="ControlPanel\Security\IUnicornAuthenticationProvider.cs" />
+    <Compile Include="ControlPanel\Security\LegacyAuthenticationProvider.cs" />
+    <Compile Include="ControlPanel\Security\SecurityState.cs" />
+    <Compile Include="Loader\ConsistencyException.cs" />
+    <Compile Include="Loader\DebugSerializationLoaderLogger.cs" />
+    <Compile Include="Loader\DefaultDuplicateIdConsistencyCheckerLogger.cs" />
+    <Compile Include="Loader\DefaultSerializationLoaderLogger.cs" />
+    <Compile Include="Loader\DefaultSyncConfiguration.cs" />
+    <Compile Include="Loader\DeserializeFailureRetryer.cs" />
+    <Compile Include="Loader\DuplicateIdConsistencyChecker.cs" />
+    <Compile Include="Loader\IConsistencyChecker.cs" />
+    <Compile Include="Loader\IDeserializeFailureRetryer.cs" />
+    <Compile Include="Loader\IDuplicateIdConsistencyCheckerLogger.cs" />
+    <Compile Include="Loader\ISerializationLoaderLogger.cs" />
+    <Compile Include="Loader\ISyncConfiguration.cs" />
+    <Compile Include="Loader\SerializationLoader.cs" />
+    <Compile Include="Logging\DeferredLogWriter.cs" />
+    <Compile Include="Logging\ExceptionFormatter.cs" />
+    <Compile Include="Logging\Formatting\DeserializationExceptionFormatter.cs" />
+    <Compile Include="Logging\Formatting\IExceptionFormatter.cs" />
+    <Compile Include="Logging\Formatting\TemplateMissingFieldExceptionFormatter.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\LoggingContext.cs" />
+    <Compile Include="Logging\LogTransaction.cs" />
+    <Compile Include="Logging\PubSubLogger.cs" />
+    <Compile Include="Logging\SitecoreLogger.cs" />
+    <Compile Include="Logging\WebConsoleLogger.cs" />
     <Compile Include="Pipelines\FoundryDashboardPipelineProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FoundryVersion.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\RankingFoundry\RankingFoundry.config" />

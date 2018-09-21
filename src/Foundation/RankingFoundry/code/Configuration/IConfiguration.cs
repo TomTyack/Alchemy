@@ -1,6 +1,6 @@
-﻿using Configy.Containers;
+﻿using System.ComponentModel;
 
-namespace Unicorn.Configuration
+namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
 	/// <summary>
 	/// Represents a Unicorn configuration. A configuration is basically an instance of a DI container.

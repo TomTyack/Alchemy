@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Unicorn.Configuration
+namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
 	/// <summary>
 	/// This wrapper class prevents performing dependency reconfiguration on configurations after the setup phase is complete.

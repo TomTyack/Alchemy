@@ -1,7 +1,7 @@
 ﻿using Sitecore.Configuration;
-using Unicorn.ControlPanel.Security;
+using Sitecore.Foundation.RankingFoundry.ControlPanel.Security;
 
-namespace Unicorn.Configuration
+namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
 	/// <summary>
 	/// This is the primary class to read configurations with. It reads the configuration provider from Unicorn.config and loads its configurations per its implementation.

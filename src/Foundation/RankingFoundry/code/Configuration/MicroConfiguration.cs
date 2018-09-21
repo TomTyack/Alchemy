@@ -1,6 +1,4 @@
-﻿using Configy.Containers;
-
-namespace Unicorn.Configuration
+﻿namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
 	public class MicroConfiguration : MicroContainer, IConfiguration
 	{

@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml;
-using Configy;
-using Configy.Containers;
-using Configy.Parsing;
-using Rainbow.Storage;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
-using Unicorn.Data;
-using Unicorn.Evaluators;
-using Unicorn.Loader;
-using Unicorn.Logging;
-using Unicorn.Predicates;
 
-namespace Unicorn.Configuration
+namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
 	/// <summary>
 	/// Reads Unicorn dependency configurations from XML (e.g. Sitecore web.config section sitecore/unicorn)
@@ -44,7 +34,7 @@ namespace Unicorn.Configuration
 
 		protected virtual XmlNode GetConfigurationNode()
 		{
-			return Factory.GetConfigNode("/sitecore/unicorn");
+			return Factory.GetConfigNode("/sitecore/foundry");
 		}
 
 		protected virtual void LoadConfigurations()

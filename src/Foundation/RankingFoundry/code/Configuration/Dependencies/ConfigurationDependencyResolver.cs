@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Sitecore.Diagnostics;
-using Unicorn.Predicates;
 
-namespace Unicorn.Configuration.Dependencies
+namespace Sitecore.Foundation.RankingFoundry.Configuration.Dependencies
 {
 	public class ConfigurationDependencyResolver
 	{

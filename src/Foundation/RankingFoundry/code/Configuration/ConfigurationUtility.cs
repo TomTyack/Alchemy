@@ -2,7 +2,7 @@
 using System.IO;
 using System.Web.Hosting;
 
-namespace Unicorn.Configuration
+namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
 	internal static class ConfigurationUtility
 	{

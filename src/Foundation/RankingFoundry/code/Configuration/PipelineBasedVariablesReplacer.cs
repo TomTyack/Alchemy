@@ -1,9 +1,7 @@
 ﻿using System;
-using Configy.Parsing;
 using Sitecore.Pipelines;
-using Unicorn.Pipelines.UnicornExpandConfigurationVariables;
 
-namespace Unicorn.Configuration
+namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
 	public class PipelineBasedVariablesReplacer : IContainerDefinitionVariablesReplacer
 	{

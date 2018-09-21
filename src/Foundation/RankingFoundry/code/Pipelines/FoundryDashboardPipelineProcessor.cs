@@ -2,11 +2,15 @@
 using System.Net;
 using System.Web;
 using Sitecore.Configuration;
+using Sitecore.Foundation.RankingFoundry.Configuration;
+using Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornControlPanelRequest;
+using Sitecore.Foundation.RankingFoundry.ControlPanel.Responses;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.HttpRequest;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
-using SecurityState = Unicorn.ControlPanel.Security.SecurityState;
+using Unicorn;
+using SecurityState = Sitecore.Foundation.RankingFoundry.ControlPanel.Security.SecurityState;
 
 namespace Sitecore.Foundation.RankingFoundry.Pipelines
 {
@@ -61,24 +65,24 @@ namespace Sitecore.Foundation.RankingFoundry.Pipelines
             else securityState = new SecurityState(false, false);
 
             // this securitydisabler allows the control panel to execute unfettered when debug compilation is enabled but you are not signed into Sitecore
-            using (new SecurityDisabler())
-            {
-                var pipelineArgs = new UnicornControlPanelRequestPipelineArgs(verb, new HttpContextWrapper(context), securityState);
+            //using (new SecurityDisabler())
+            //{
+            //    var pipelineArgs = new UnicornControlPanelRequestPipelineArgs(verb, new HttpContextWrapper(context), securityState);
 
-                CorePipeline.Run("unicornControlPanelRequest", pipelineArgs, true);
+            //    CorePipeline.Run("unicornControlPanelRequest", pipelineArgs, true);
 
-                if (pipelineArgs.Response == null)
-                {
-                    pipelineArgs.Response = new PlainTextResponse("Not Found", HttpStatusCode.NotFound);
-                }
+            //    if (pipelineArgs.Response == null)
+            //    {
+            //        pipelineArgs.Response = new PlainTextResponse("Not Found", HttpStatusCode.NotFound);
+            //    }
 
-                if (securityState.IsAllowed)
-                {
-                    context.Response.AddHeader("X-Unicorn-Version", UnicornVersion.Current);
-                }
+            //    if (securityState.IsAllowed)
+            //    {
+            //        context.Response.AddHeader("X-Unicorn-Version", FoundryVersion.Current);
+            //    }
 
-                pipelineArgs.Response.Execute(new HttpResponseWrapper(context.Response));
-            }
+            //    pipelineArgs.Response.Execute(new HttpResponseWrapper(context.Response));
+            //}
         }
     }
 }

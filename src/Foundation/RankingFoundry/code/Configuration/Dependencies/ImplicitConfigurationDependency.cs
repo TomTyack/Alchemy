@@ -1,4 +1,4 @@
-namespace Unicorn.Configuration.Dependencies
+namespace Sitecore.Foundation.RankingFoundry.Configuration.Dependencies
 {
 	/// <summary>
 	/// Defines an implicit dependency between Unicorn configurations
