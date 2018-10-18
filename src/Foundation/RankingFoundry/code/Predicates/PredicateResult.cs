@@ -1,4 +1,4 @@
-﻿namespace Unicorn.Predicates
+﻿namespace Sitecore.Foundation.RankingFoundry.Predicates
 {
 	public class PredicateResult
 	{

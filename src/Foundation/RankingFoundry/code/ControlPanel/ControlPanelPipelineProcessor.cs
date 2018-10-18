@@ -19,15 +19,12 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel
 	/// This is a httpRequestBegin pipeline processor that is effectively a sitecore-integrated HTTP handler.
 	/// It renders the Unicorn control panel UI if the current URL matches the activationUrl.
 	/// </summary>
-	public class UnicornControlPanelPipelineProcessor : HttpRequestProcessor
+	public class ControlPanelPipelineProcessor : HttpRequestProcessor
 	{
 		private readonly string _activationUrl;
 		private readonly string _activationSite;
 
-		// Added, for people who forget to update their configs when upgrading from < 4.0.4
-		public UnicornControlPanelPipelineProcessor(string activationUrl) : this(activationUrl, "shell") { }
-
-		public UnicornControlPanelPipelineProcessor(string activationUrl, string activationSite)
+		public ControlPanelPipelineProcessor(string activationUrl, string activationSite)
 		{
 			_activationUrl = activationUrl;
 			_activationSite = activationSite;
@@ -64,20 +61,20 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel
 
 			var verb = context.Request.QueryString["verb"];
 
-			var authProvider = UnicornConfigurationManager.AuthenticationProvider;
+			var authProvider = FoundryConfigurationManager.AuthenticationProvider;
 			SecurityState securityState;
 			if (authProvider != null)
 			{
-				securityState = UnicornConfigurationManager.AuthenticationProvider.ValidateRequest(new HttpRequestWrapper(HttpContext.Current.Request));
+				securityState = FoundryConfigurationManager.AuthenticationProvider.ValidateRequest(new HttpRequestWrapper(HttpContext.Current.Request));
 			}
 			else securityState = new SecurityState(false, false);
 
 			// this securitydisabler allows the control panel to execute unfettered when debug compilation is enabled but you are not signed into Sitecore
 			using (new SecurityDisabler())
 			{
-				var pipelineArgs = new UnicornControlPanelRequestPipelineArgs(verb, new HttpContextWrapper(context), securityState);
+				var pipelineArgs = new FoundryControlPanelRequestPipelineArgs(verb, new HttpContextWrapper(context), securityState);
 
-				CorePipeline.Run("unicornControlPanelRequest", pipelineArgs, true);
+				CorePipeline.Run("foundryControlPanelRequest", pipelineArgs, true);
 
 				if (pipelineArgs.Response == null)
 				{
@@ -86,7 +83,7 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel
 
 				if (securityState.IsAllowed)
 				{
-					context.Response.AddHeader("X-Unicorn-Version", UnicornVersion.Current);
+					context.Response.AddHeader("X-Companion-Version", FoundryVersion.Current);
 				}
 				
 				pipelineArgs.Response.Execute(new HttpResponseWrapper(context.Response));

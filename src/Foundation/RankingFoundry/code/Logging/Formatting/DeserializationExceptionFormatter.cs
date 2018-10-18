@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Text;
-using Rainbow.Storage.Sc.Deserialization;
 
-namespace Unicorn.Logging.Formatting
+namespace Sitecore.Foundation.RankingFoundry.Logging.Formatting
 {
 	public class DeserializationExceptionFormatter : IExceptionFormatter
 	{

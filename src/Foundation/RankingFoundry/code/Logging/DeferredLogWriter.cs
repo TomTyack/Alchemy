@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace Unicorn.Logging
+namespace Sitecore.Foundation.RankingFoundry.Logging
 {
 	/// <summary>
 	/// Allows 'storing up' log entries and writing them later.

@@ -3,20 +3,20 @@ using Sitecore.Foundation.RankingFoundry.ControlPanel.Responses;
 
 namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornControlPanelRequest
 {
-	public abstract class UnicornControlPanelRequestPipelineProcessor
+	public abstract class FoundryControlPanelRequestPipelineProcessor
 	{
 		private readonly string _verbHandled;
 		private readonly bool _requireAuthentication;
 		private readonly bool _abortPipelineIfHandled;
 
-		protected UnicornControlPanelRequestPipelineProcessor(string verbHandled, bool requireAuthentication = true, bool abortPipelineIfHandled = true)
+		protected FoundryControlPanelRequestPipelineProcessor(string verbHandled, bool requireAuthentication = true, bool abortPipelineIfHandled = true)
 		{
 			_verbHandled = verbHandled;
 			_requireAuthentication = requireAuthentication;
 			_abortPipelineIfHandled = abortPipelineIfHandled;
 		}
 
-		public virtual void Process(UnicornControlPanelRequestPipelineArgs args)
+		public virtual void Process(FoundryControlPanelRequestPipelineArgs args)
 		{
 			bool handled = HandlesVerb(args);
 
@@ -39,7 +39,7 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornContr
 		/// Verbs note: passing an empty string to _verbHandled makes you the default page when no verb is passed
 		/// Passing null as _verbHandled makes you the catch-all page for every request not handled by previous pipeline handlers
 		/// </summary>
-		protected virtual bool HandlesVerb(UnicornControlPanelRequestPipelineArgs args)
+		protected virtual bool HandlesVerb(FoundryControlPanelRequestPipelineArgs args)
 		{
 			if (_requireAuthentication && !args.SecurityState.IsAllowed) return false;
 
@@ -48,6 +48,6 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornContr
 			return _verbHandled.Equals(args.Verb ?? string.Empty, StringComparison.OrdinalIgnoreCase);
 		}
 
-		protected abstract IResponse CreateResponse(UnicornControlPanelRequestPipelineArgs args);
+		protected abstract IResponse CreateResponse(FoundryControlPanelRequestPipelineArgs args);
 	}
 }

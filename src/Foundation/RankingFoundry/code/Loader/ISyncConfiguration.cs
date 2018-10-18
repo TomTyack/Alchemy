@@ -1,4 +1,4 @@
-namespace Unicorn.Loader
+namespace Sitecore.Foundation.RankingFoundry.Loader
 {
 	/// <summary>
 	/// Controls how a configuration syncs.

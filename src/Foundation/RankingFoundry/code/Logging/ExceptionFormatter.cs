@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text;
-using Unicorn.Logging.Formatting;
+using Sitecore.Foundation.RankingFoundry.Logging.Formatting;
 
-namespace Unicorn.Logging
+namespace Sitecore.Foundation.RankingFoundry.Logging
 {
 	/// <summary>
 	/// Formats exceptions all pretty-like so we can log them and show them in the HTML console intelligibly

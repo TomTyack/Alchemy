@@ -1,4 +1,6 @@
 ﻿using System;
+using Configy.Parsing;
+using Sitecore.Foundation.RankingFoundry.Pipelines.UnicornExpandConfigurationVariables;
 using Sitecore.Pipelines;
 
 namespace Sitecore.Foundation.RankingFoundry.Configuration

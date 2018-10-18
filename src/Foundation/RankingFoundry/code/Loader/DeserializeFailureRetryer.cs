@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Rainbow.Model;
-using Rainbow.Storage.Sc.Deserialization;
 using Sitecore.Diagnostics;
-using Unicorn.Data;
 
-namespace Unicorn.Loader
+namespace Sitecore.Foundation.RankingFoundry.Loader
 {
 	/// <summary>
 	/// The failure retryer manages the queue of deserialization failures for later retry.

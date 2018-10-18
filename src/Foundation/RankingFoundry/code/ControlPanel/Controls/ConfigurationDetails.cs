@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Web.UI;
+using Rainbow;
 using Sitecore.Foundation.RankingFoundry.Configuration.Dependencies;
+using Sitecore.Foundation.RankingFoundry.Predicates;
 
 namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Controls
 {
@@ -11,17 +13,17 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Controls
 	internal class ConfigurationDetails : IControlPanelControl
 	{
 		private readonly IPredicate _predicate;
-		private readonly ITargetDataStore _serializationStore;
-		private readonly ISourceDataStore _sourceDataStore;
-		private readonly IEvaluator _evaluator;
+		//private readonly ITargetDataStore _serializationStore;
+		//private readonly ISourceDataStore _sourceDataStore;
+		//private readonly IEvaluator _evaluator;
 		private readonly ConfigurationDependencyResolver _dependencyResolver;
 
-		public ConfigurationDetails(IPredicate predicate, ITargetDataStore serializationStore, ISourceDataStore sourceDataStore, IEvaluator evaluator, ConfigurationDependencyResolver dependencyResolver)
+		public ConfigurationDetails(IPredicate predicate, ConfigurationDependencyResolver dependencyResolver)
 		{
 			_predicate = predicate;
-			_serializationStore = serializationStore;
-			_sourceDataStore = sourceDataStore;
-			_evaluator = evaluator;
+			//_serializationStore = serializationStore;
+			//_sourceDataStore = sourceDataStore;
+			//_evaluator = evaluator;
 			_dependencyResolver = dependencyResolver;
 		}
 
@@ -50,23 +52,23 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Controls
 				_predicate,
 				writer);
 
-			RenderType(collapse,
-				"Target Data Store",
-				"Defines how items are serialized, for example to disk using YAML format.",
-				_serializationStore,
-				writer);
+			//RenderType(collapse,
+			//	"Target Data Store",
+			//	"Defines how items are serialized, for example to disk using YAML format.",
+			//	_serializationStore,
+			//	writer);
 
-			RenderType(collapse,
-				"Source Data Store",
-				"Defines how source data is read to compare with serialized data. Normally this is a Sitecore data store.",
-				_sourceDataStore,
-				writer);
+			//RenderType(collapse,
+			//	"Source Data Store",
+			//	"Defines how source data is read to compare with serialized data. Normally this is a Sitecore data store.",
+			//	_sourceDataStore,
+			//	writer);
 
-			RenderType(collapse,
-				"Evaluator",
-				"The evaluator decides what to do when included items need updating, creation, or deletion.",
-				_evaluator,
-				writer);
+			//RenderType(collapse,
+			//	"Evaluator",
+			//	"The evaluator decides what to do when included items need updating, creation, or deletion.",
+			//	_evaluator,
+			//	writer);
 
 			writer.Write(@"
 					</article>");

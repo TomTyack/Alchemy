@@ -2,7 +2,7 @@
 using Rainbow.Model;
 using Rainbow.Storage;
 
-namespace Unicorn.Predicates
+namespace Sitecore.Foundation.RankingFoundry.Predicates
 {
 	/// <summary>
 	/// The predicate defines where loading should start (root items) and whether items should be included

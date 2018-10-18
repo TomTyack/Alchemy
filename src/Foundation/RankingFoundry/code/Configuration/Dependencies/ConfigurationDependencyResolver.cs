@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Sitecore.Diagnostics;
+using Sitecore.Foundation.RankingFoundry.Predicates;
 
 namespace Sitecore.Foundation.RankingFoundry.Configuration.Dependencies
 {
@@ -28,7 +29,7 @@ namespace Sitecore.Foundation.RankingFoundry.Configuration.Dependencies
 
 		public IConfiguration[] AllConfigurations
 		{
-			get { return _allConfigurations ?? (_allConfigurations = UnicornConfigurationManager.Configurations); }
+			get { return _allConfigurations ?? (_allConfigurations = FoundryConfigurationManager.Configurations); }
 			set { _allConfigurations = value; }
 		}
 

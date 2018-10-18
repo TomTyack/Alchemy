@@ -4,7 +4,7 @@ using Sitecore.Foundation.RankingFoundry.ControlPanel.Responses;
 
 namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornControlPanelRequest
 {
-	public class HandleAccessDenied : UnicornControlPanelRequestPipelineProcessor
+	public class HandleAccessDenied : FoundryControlPanelRequestPipelineProcessor
 	{
 		// NOTE: because each processor checks for authentication individually this is more of an unhandled access denied handler as opposed to a gate
 		// Should come before control panel in pipeline
@@ -13,12 +13,12 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornContr
 		{
 		}
 
-		protected override bool HandlesVerb(UnicornControlPanelRequestPipelineArgs args)
+		protected override bool HandlesVerb(FoundryControlPanelRequestPipelineArgs args)
 		{
 			return !args.SecurityState.IsAllowed;
 		}
 
-		protected override IResponse CreateResponse(UnicornControlPanelRequestPipelineArgs args)
+		protected override IResponse CreateResponse(FoundryControlPanelRequestPipelineArgs args)
 		{
 			if (args.SecurityState.IsAutomatedTool)
 			{

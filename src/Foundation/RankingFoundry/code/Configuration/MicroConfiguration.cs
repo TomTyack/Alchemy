@@ -1,4 +1,6 @@
-﻿namespace Sitecore.Foundation.RankingFoundry.Configuration
+﻿using Configy.Containers;
+
+namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
 	public class MicroConfiguration : MicroContainer, IConfiguration
 	{

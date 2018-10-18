@@ -1,6 +1,4 @@
-﻿using Rainbow.Model;
-
-namespace Unicorn.Loader
+﻿namespace Sitecore.Foundation.RankingFoundry.Loader
 {
 	public interface ISerializationLoaderLogger
 	{

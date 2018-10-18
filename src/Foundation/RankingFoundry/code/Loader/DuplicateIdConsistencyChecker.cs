@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using Rainbow.Model;
-using Unicorn.Data;
 
-namespace Unicorn.Loader
+namespace Sitecore.Foundation.RankingFoundry.Loader
 {
 	/// <summary>
 	/// Watches for a loader operation to attempt to load the same ID more than once

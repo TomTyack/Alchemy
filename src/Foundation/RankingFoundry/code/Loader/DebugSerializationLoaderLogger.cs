@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Rainbow.Model;
+using Sitecore.Foundation.RankingFoundry.Logging;
 using Sitecore.StringExtensions;
-using Unicorn.Data;
-using Unicorn.Logging;
 
-namespace Unicorn.Loader
+namespace Sitecore.Foundation.RankingFoundry.Loader
 {
 	/// <summary>
 	/// Loader logger that dumps additional debug data about loading to the logs

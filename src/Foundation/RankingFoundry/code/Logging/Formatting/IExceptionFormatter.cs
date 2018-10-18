@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Unicorn.Logging.Formatting
+namespace Sitecore.Foundation.RankingFoundry.Logging.Formatting
 {
 	public interface IExceptionFormatter
 	{

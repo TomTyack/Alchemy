@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Sitecore.Diagnostics;
 
-namespace Unicorn.Logging
+namespace Sitecore.Foundation.RankingFoundry.Logging
 {
 	/// <summary>
 	/// Logger that writes to the Sitecore logs

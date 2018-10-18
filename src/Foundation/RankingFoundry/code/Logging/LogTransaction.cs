@@ -2,7 +2,7 @@
 using Sitecore.Common;
 using Sitecore.Diagnostics;
 
-namespace Unicorn.Logging
+namespace Sitecore.Foundation.RankingFoundry.Logging
 {
 	/// <summary>
 	/// While this is in scope (with a using), log entries are queued up from this thread and written in a single batch on dispose

@@ -9,16 +9,16 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Headings
 		static readonly Random Random = new Random();
 
 		private static readonly string[] HtmlChoices = {
-			"Unicorn.ControlPanel.Headings.Unicorn.html",
-			"Unicorn.ControlPanel.Headings.Unicorn.svg.html",
-			"Unicorn.ControlPanel.Headings.Unicorn2.svg.html",
-			"Unicorn.ControlPanel.Headings.Unicorn3.svg.html"
+			"Sitecore.Foundation.RankingFoundry.ControlPanel.Headings.Unicorn.html",
+			"Sitecore.Foundation.RankingFoundry.ControlPanel.Headings.Unicorn.svg.html",
+			"Sitecore.Foundation.RankingFoundry.ControlPanel.Headings.Unicorn2.svg.html",
+			"Sitecore.Foundation.RankingFoundry.ControlPanel.Headings.Unicorn3.svg.html"
 		};
 
 		public string GetHeadingHtml()
 		{
 			// heh heh :)
-			if (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) return ReadResource("Unicorn.ControlPanel.Headings.April.svg.html");
+			if (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) return ReadResource("Sitecore.Foundation.RankingFoundry.ControlPanel.Headings.April.svg.html");
 
 			var headerIndex = Random.Next(0, HtmlChoices.Length);
 
@@ -27,13 +27,13 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Headings
 
 		public string GetControlPanelHeadingHtml()
 		{
-			return ReadResource("Unicorn.ControlPanel.Headings.ControlPanel.svg.html");
+			return ReadResource("Sitecore.Foundation.RankingFoundry.ControlPanel.Headings.ControlPanel.svg.html");
 		}
 
 		public string GetAllTheThings()
 		{
 			// http://nearby-pla.net/images/all-the-things-blank-clean-template.html FTW
-			return ReadResource("Unicorn.ControlPanel.Headings.Allthethings.svg.html");
+			return ReadResource("Sitecore.Foundation.RankingFoundry.ControlPanel.Headings.Allthethings.svg.html");
 		}
 
 		protected virtual string ReadResource(string name)

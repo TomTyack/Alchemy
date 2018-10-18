@@ -5,7 +5,7 @@ using Sitecore.Pipelines;
 
 namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornControlPanelRequest
 {
-	public class UnicornControlPanelRequestPipelineArgs : PipelineArgs
+	public class FoundryControlPanelRequestPipelineArgs : PipelineArgs
 	{
 		public string Verb { get; private set; }
 
@@ -15,7 +15,7 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornContr
 
 		public IResponse Response { get; set; }
 
-		public UnicornControlPanelRequestPipelineArgs(string verb, HttpContextBase context, SecurityState securityState)
+		public FoundryControlPanelRequestPipelineArgs(string verb, HttpContextBase context, SecurityState securityState)
 		{
 			Verb = verb;
 			Context = context;

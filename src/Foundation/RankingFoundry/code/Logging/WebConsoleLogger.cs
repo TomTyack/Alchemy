@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using Kamsar.WebConsole;
 
-namespace Unicorn.Logging
+namespace Sitecore.Foundation.RankingFoundry.Logging
 {
 	/// <summary>
 	/// Logger that writes to a WebConsole.

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
 
-namespace Unicorn
+namespace Sitecore.Foundation.RankingFoundry
 {
 	public static class FoundryVersion
     {

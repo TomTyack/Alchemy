@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using Unicorn.Configuration;
 
-namespace Unicorn.Logging
+namespace Sitecore.Foundation.RankingFoundry.Logging
 {
 	/// <summary>
 	/// The LoggingContext allows you to temporarily register a new logger with the PubSubLogger for a finite period of execution.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Unicorn.Logging
+namespace Sitecore.Foundation.RankingFoundry.Logging
 {
 	/// <summary>
 	/// This is an abstraction to something that can receive log entries from Unicorn logger clases.

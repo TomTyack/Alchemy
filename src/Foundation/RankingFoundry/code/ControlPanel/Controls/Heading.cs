@@ -18,15 +18,7 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Controls
 
 			if (_isAuthenticated)
 			{
-				writer.Write($"<p class=\"version\">Version {UnicornVersion.Current} | <a href=\"#\" data-modal=\"options\">Options</a></p>");
-
-				if (ReactorContext.IsActive)
-				{
-					writer.Write(@"<p class=""warning"">Dilithium cache context is active. <br><br>
-								Do not sync any Dilithium configurations until the cache has released from the other sync or reserialize operation. 
-								If this remains visible and no operations are in progress this may indicate a bug in Unicorn; 
-								report what you did right before this in an issue on GitHub and then restart your app pool to clear.</p>");
-				}
+				writer.Write($"<p class=\"version\">Version {FoundryVersion.Current} | <a href=\"#\" data-modal=\"options\">Options</a></p>");
 
 				writer.Write(@"<div class=""overlay"" id=""options"">
 								<article class=""modal"">

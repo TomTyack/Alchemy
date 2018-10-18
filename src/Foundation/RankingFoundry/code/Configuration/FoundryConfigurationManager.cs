@@ -6,14 +6,14 @@ namespace Sitecore.Foundation.RankingFoundry.Configuration
 	/// <summary>
 	/// This is the primary class to read configurations with. It reads the configuration provider from Unicorn.config and loads its configurations per its implementation.
 	/// </summary>
-	public static class UnicornConfigurationManager
+	public static class FoundryConfigurationManager
 	{
 		private static readonly IConfigurationProvider Instance;
 
-		static UnicornConfigurationManager()
+		static FoundryConfigurationManager()
 		{
-			Instance = (IConfigurationProvider) Factory.CreateObject("/sitecore/unicorn/configurationProvider", true);
-			AuthenticationProvider = (IUnicornAuthenticationProvider)Factory.CreateObject("/sitecore/unicorn/authenticationProvider", false);
+			Instance = (IConfigurationProvider) Factory.CreateObject("/sitecore/foundry/configurationProvider", true);
+			AuthenticationProvider = (IUnicornAuthenticationProvider)Factory.CreateObject("/sitecore/foundry/authenticationProvider", false);
 		}
 
 		public static IConfiguration[] Configurations => Instance.Configurations;

@@ -1,6 +1,4 @@
-﻿using Rainbow.Model;
-
-namespace Unicorn.Loader
+﻿namespace Sitecore.Foundation.RankingFoundry.Loader
 {
 	/// <summary>
 	/// The consistency checker allows you to hook into the load process to check for inconsistencies in the serialized data.

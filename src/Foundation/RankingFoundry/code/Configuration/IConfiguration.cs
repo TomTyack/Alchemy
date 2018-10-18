@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using Configy.Containers;
 
 namespace Sitecore.Foundation.RankingFoundry.Configuration
 {

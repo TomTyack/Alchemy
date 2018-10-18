@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Unicorn.Loader
+﻿namespace Sitecore.Foundation.RankingFoundry.Loader
 {
 	public class DefaultSyncConfiguration : ISyncConfiguration
 	{

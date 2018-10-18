@@ -2,14 +2,11 @@
 using System.Net;
 using System.Web;
 using Sitecore.Configuration;
-using Sitecore.Foundation.RankingFoundry.Configuration;
-using Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornControlPanelRequest;
-using Sitecore.Foundation.RankingFoundry.ControlPanel.Responses;
+using Sitecore.Foundation.RankingFoundry.Configuration;        
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.HttpRequest;
 using Sitecore.SecurityModel;
-using Sitecore.Sites;
-using Unicorn;
+using Sitecore.Sites;  
 using SecurityState = Sitecore.Foundation.RankingFoundry.ControlPanel.Security.SecurityState;
 
 namespace Sitecore.Foundation.RankingFoundry.Pipelines
@@ -56,11 +53,11 @@ namespace Sitecore.Foundation.RankingFoundry.Pipelines
 
             var verb = context.Request.QueryString["verb"];
 
-            var authProvider = UnicornConfigurationManager.AuthenticationProvider;
+            var authProvider = FoundryConfigurationManager.AuthenticationProvider;
             SecurityState securityState;
             if (authProvider != null)
             {
-                securityState = UnicornConfigurationManager.AuthenticationProvider.ValidateRequest(new HttpRequestWrapper(HttpContext.Current.Request));
+                securityState = FoundryConfigurationManager.AuthenticationProvider.ValidateRequest(new HttpRequestWrapper(HttpContext.Current.Request));
             }
             else securityState = new SecurityState(false, false);
 

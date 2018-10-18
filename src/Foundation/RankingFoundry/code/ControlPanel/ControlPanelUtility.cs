@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Rainbow.Storage;
 using Sitecore.Foundation.RankingFoundry.Configuration;
 using Sitecore.Foundation.RankingFoundry.Configuration.Dependencies;
+using Sitecore.Foundation.RankingFoundry.Predicates;
 
 namespace Sitecore.Foundation.RankingFoundry.ControlPanel
 {
@@ -23,35 +25,6 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel
 		}
 
 		/// <summary>
-		/// Verifies that the parents of all root paths defined in the predicate exist in Sitecore
-		/// In other words, that if one were to sync this configuration and the root items had to be added,
-		/// would their parents exist?
-		/// </summary>
-		public static bool AllRootParentPathsExist(IConfiguration configuration)
-		{
-			var predicate = configuration.Resolve<PredicateRootPathResolver>();
-			var sourceDataStore = configuration.Resolve<ISourceDataStore>();
-
-			return predicate.GetRootPaths().All(include => RootPathParentExists(sourceDataStore, include));
-		}
-
-		/// <summary>
-		/// Gets any paths in a configuration's predicate that do not exist in Sitecore
-		/// In other words, if you were to reserialize this configuration would there be something
-		/// to serialize at all root locations?
-		/// </summary>
-		public static string[] GetInvalidRootPaths(IConfiguration configuration)
-		{
-			var predicate = configuration.Resolve<PredicateRootPathResolver>();
-			var sourceDataStore = configuration.Resolve<ISourceDataStore>();
-
-			return predicate.GetRootPaths()
-				.Where(include => !RootPathExists(sourceDataStore, include))
-				.Select(treeRoot => treeRoot.DatabaseName + ":" + treeRoot.Path)
-				.ToArray(); 
-		}
-
-		/// <summary>
 		/// Resolves a set of configurations matches from a caret-delimited query string value.
 		/// Dependency order is considered in the returned order of configurations.
 		/// </summary>
@@ -69,7 +42,7 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel
 				.Where(key => !string.IsNullOrWhiteSpace(key))
 				.ToList();
 
-			var allConfigurations = UnicornConfigurationManager.Configurations;
+			var allConfigurations = FoundryConfigurationManager.Configurations;
 
 			// determine which configurations the query string resolves to
 			List<IConfiguration> selectedConfigurations = new List<IConfiguration>();

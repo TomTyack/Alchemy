@@ -1,21 +1,14 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using Rainbow.Model;
 using Sitecore.Caching;
 using Sitecore.Data.Events;
 using Sitecore.Diagnostics;
-using Unicorn.Data;
-using Unicorn.Data.DataProvider;
-using Unicorn.Data.Dilithium;
-using Unicorn.Evaluators;
-using Unicorn.Predicates;
+
 // ReSharper disable TooWideLocalVariableScope
 
-namespace Unicorn.Loader
+namespace Sitecore.Foundation.RankingFoundry.Loader
 {
 	/// <summary>
 	/// The loader is the heart of Unicorn syncing. It encapsulates the logic required to walk the tree according to a predicate and invoke the evaluator to decide what to do with the tree items.

@@ -2,7 +2,7 @@
 using Sitecore.Diagnostics;
 using Sitecore.Pipelines;
 
-namespace Unicorn.Pipelines.UnicornExpandConfigurationVariables
+namespace Sitecore.Foundation.RankingFoundry.Pipelines.UnicornExpandConfigurationVariables
 {
 	public class UnicornExpandConfigurationVariablesPipelineArgs : PipelineArgs
 	{
