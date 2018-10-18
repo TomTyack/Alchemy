@@ -26,6 +26,7 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -96,26 +97,18 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Unicorn, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Unicorn.Core.4.0.0\lib\net452\Unicorn.dll</HintPath>
-    </Reference>
-    <Reference Include="Unicorn.Roles, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Unicorn.Roles.Core.4.0.0\lib\net452\Unicorn.Roles.dll</HintPath>
-    </Reference>
-    <Reference Include="Unicorn.Users, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Unicorn.Users.Core.4.0.0\lib\net452\Unicorn.Users.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Web.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="App_Config\Include\Companion\Companion.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
