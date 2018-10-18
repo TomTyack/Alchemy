@@ -1,2 +1,6 @@
 /src/Foundation/Companion/code/obj
 /src/Foundation/Companion/code/bin
+/.vs
+/src/Foundation/RankingFoundry/code/obj
+/packages
+/src/Foundation/RankingFoundry/code/bin
