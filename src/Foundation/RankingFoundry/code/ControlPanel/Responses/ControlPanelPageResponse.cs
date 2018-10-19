@@ -47,8 +47,6 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Responses
 		protected virtual IEnumerable<IControlPanelControl> CreateHeaderControls(SecurityState securityState)
 		{
 			yield return new HtmlHeadAndStyles();
-
-			yield return new Heading(securityState.IsAllowed);
 		}
 
 		protected virtual IEnumerable<IControlPanelControl> CreateFooterControls()

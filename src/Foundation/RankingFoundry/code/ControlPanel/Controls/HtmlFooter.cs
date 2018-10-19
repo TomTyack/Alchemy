@@ -6,155 +6,23 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Controls
 	{
 		public void Render(HtmlTextWriter writer)
 		{
-			// this allows expanding the dependency details of a configuration when it has serialized items already
-			// yes, jQuery is total overkill. yes, deal with it. :)
-			writer.Write("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js\"></script>");
-			writer.Write("<script src=\"https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.0/js.cookie.min.js\"></script>");
-			writer.Write(@"<script>
-		/* Overlays */
-		(function($) { 
-			$.fn.overlay = function() {
-				overlay = $(this);
-				overlay.ready(function() {
-					overlay.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
-						if (!$(this).hasClass('shown')) return $(this).css('visibility', 'hidden');
-					});
-					overlay.on('show', function() {
-						var $this = $(this);
-						$this.css('visibility', 'visible');
-						$this.addClass('shown');
-						return true;
-					});
-					overlay.on('hide', function() {
-						$(this).removeClass('shown');
-						return true;
-					});
-					overlay.on('click', function(e) {
-						if (e.target.className === $(this).attr('class')) return $(this).trigger('hide');
-					})
-					$('a[data-overlay-trigger=""]').on('click', function() {
-						overlay.trigger('show');
-					});
-					
-					$('a[data-modal]:not([data-modal=""])').on('click', function(e) {
-						$('#' + $(this).data('modal')).trigger('show');
+            //  https://github.com/filamentgroup/loadJS/blob/master/loadJS.js
+            writer.Write(@"<script>	/*!loadJS: load a JS file asynchronously. [c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). Licensed MIT */
+		    !function (e) { var t = function (t, n) { 'use strict'; var o = e.document.getElementsByTagName('script')[0], r = e.document.createElement('script'); return r.src = t, r.async = !0, o.parentNode.insertBefore(r, o), n && 'function' == typeof n && (r.onload = n), r }; 'undefined' != typeof module ? module.exports = t : e.loadJS = t }('undefined' != typeof global ? global : this);
+            </script>");
 
-						e.preventDefault();
-					});
-				})
-			};
-		})(jQuery);
+            // 
+		    writer.Write("<script>");
+		    writer.Write("var requireJs = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js';var reactScriptsArray = ['https://cdnjs.cloudflare.com/ajax/libs/react/16.4.2/cjs/react.development.js'];");
+		    writer.Write("for (var scriptsLoaded = 0, i = 0; i < reactScriptsArray.length; i++)loadJS(reactScriptsArray[i], function() { scriptsLoaded === reactScriptsArray.length - 1 && startNext(), scriptsLoaded++ });");
+           
 
-		jQuery(function() {
-			$('.overlay').overlay();
-		});
+		    writer.Write("function startNext(){");
+		    writer.Write("loadJS(requireJs, function() { console.log(\"react bootup\")  })");
 
-		/* Multiple Selection */
-		$(function() {
-			$('.fakebox:not(.fakebox-all)').on('click', function() {
-				var $this = $(this);
-
-				$this.toggleClass('checked');
-
-				if(!$this.hasClass('checked')) $('.fakebox-all').removeClass('checked');
-
-				UpdateBatch();
-			});
-
-			$('.fakebox-all').on('click', function() {
-				var $this = $(this);
-
-				$this.toggleClass('checked');
-
-				var $fakeboxes = $('.fakebox:not(.fakebox-all)');
-
-				if($this.hasClass('checked')) $fakeboxes.addClass('checked');
-				else $fakeboxes.removeClass('checked');
-
-				UpdateBatch();
-			});
-		});
-
-		function UpdateBatch() {
-			var $fakeboxes = $('.fakebox:not(.fakebox-all)');
-			var checked = $fakeboxes.filter('.checked')
-				.map(function() { return $(this).text().trim(); })
-				.get();
-
-			var allSelected = checked.length == $fakeboxes.length;
-			var configSpec = checked.join('^');
-			var verbosity = $('#verbosity').val();
-			var skipTransparent = $('#skipTransparent').prop('checked') ? 1 : 0;
-
-			$('.batch-sync').attr('href', '?verb=Sync&configuration=' + configSpec + '&log=' + verbosity + '&skipTransparentConfigs=' + skipTransparent);
-			$('.batch-reserialize').attr('href', '?verb=Reserialize&configuration=' + configSpec + '&log=' + verbosity + '&skipTransparentConfigs=' + skipTransparent);
-			$('.batch-configurations').html('<li>' + (allSelected ? 'All Configurations' :checked.join('</li><li>')) + '</li>');
-			if(allSelected) $('.fakebox-all').addClass('checked');
-
-			if(checked.length > 0) {
-				$('.batch').finish().slideDown();
-				$('td + td').css('visibility', 'hidden');
-			}
-			else {
-				$('.batch').finish().slideUp(function() {
-					$('td + td').css('visibility', 'visible');
-				});	
-			}
-		}
-
-		$(function() {
-			/* Verbosity */
-			var verbosityCookie = Cookies.get('UnicornLogVerbosity');
-			if(verbosityCookie) {
-				$('#verbosity').val(verbosityCookie);
-			}
-
-			$('#verbosity').on('change', function() {
-				UpdateBatch();
-				UpdateOptions();
-			});
-
-			/* Transparent Skipping */
-			var transparentCookie = Cookies.get('UnicornSkipTransparent');
-			$('#skipTransparent').prop('checked', transparentCookie == '1' ? true : false);
-
-			$('#skipTransparent').on('change', function() {
-				UpdateBatch();
-				UpdateOptions();
-			});
-
-			UpdateOptions();
-
-		});
-
-		function UpdateOptions() {
-			var verbosity = $('#verbosity').val();
-			var skipTransparent = $('#skipTransparent').prop('checked');
-
-			$('[data-basehref]').each(function() {
-				$(this).attr('href', $(this).data('basehref') + '&log=' + verbosity + '&skipTransparentConfigs=' + skipTransparent);
-			});
-
-			Cookies.set('UnicornSkipTransparent', skipTransparent ? 1 : 0, { expires: 730 });
-			Cookies.set('UnicornLogVerbosity', verbosity, { expires: 730 });
-		}
-
-        var fakeboxAll = $('.fakebox-all');
-		if (fakeboxAll.offset() != null) {
-        var sticky = $('.batch');
-        stickyTop = fakeboxAll.offset().top - fakeboxAll.height();
-        $(window).scroll(function () {
-            var scroll = $(window).scrollTop();
-
-            if (scroll >= fakeboxAll.offset().top) {
-                sticky.css({ 'top': 10 });
-            }
-            else {
-                sticky.css({ 'top': stickyTop - scroll });
-            }
-        });};
-	</script>");
-			writer.Write(" </body></html>");
+            writer.Write("}");
+		    writer.Write("</script>");
+            writer.Write(" </body></html>");
 		}
 	}
 }

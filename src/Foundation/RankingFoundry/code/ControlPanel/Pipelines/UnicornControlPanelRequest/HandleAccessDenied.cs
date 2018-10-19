@@ -8,7 +8,6 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornContr
 	{
 		// NOTE: because each processor checks for authentication individually this is more of an unhandled access denied handler as opposed to a gate
 		// Should come before control panel in pipeline
-
 		public HandleAccessDenied() : base(string.Empty)
 		{
 		}

@@ -21,38 +21,16 @@ namespace Sitecore.Foundation.RankingFoundry.ControlPanel.Pipelines.UnicornContr
 
 		protected virtual IEnumerable<IControlPanelControl> CreateBodyControls(FoundryControlPanelRequestPipelineArgs args)
 		{
-			var configurations = GetConfigurations(args);
-
-			var hasSerializedItems = configurations.All(ControlPanelUtility.HasAnySerializedItems);
-			// note that we don't just check dependencies property here to catch implicit dependencies
-			var anyConfigurationsWithDependencies = configurations.Any(config => config.Resolve<ConfigurationDependencyResolver>().Dependents.Any());
-
 			var isAuthorized = args.SecurityState.IsAllowed;
 
 			if (isAuthorized)
 			{
-				if (configurations.Length == 0)
-				{
-					yield return new NoConfigurations();
-					yield break;
-				}
-
-				yield return new Literal(@"
-								</tbody>
-							</table>
-						</article>");
-
-				yield return new QuickReference();
+				yield return new ReactBootstrap();
 			}
 			else
 			{
 				yield return new AccessDenied();
 			}
-		}
-
-		protected virtual IConfiguration[] GetConfigurations(FoundryControlPanelRequestPipelineArgs args)
-		{
-			return new InterconfigurationDependencyResolver().OrderByDependencies(FoundryConfigurationManager.Configurations);
 		}
 	}
 }

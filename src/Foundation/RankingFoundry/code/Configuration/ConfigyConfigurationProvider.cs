@@ -8,7 +8,6 @@ using Configy.Parsing;
 using Sitecore.Configuration;     
 using Sitecore.Diagnostics;    
 using Sitecore.DynamicSerialization;
-using Rainbow.Storage;
 
 namespace Sitecore.Foundation.RankingFoundry.Configuration
 {
@@ -106,11 +105,11 @@ namespace Sitecore.Foundation.RankingFoundry.Configuration
 
         protected override void RegisterConfigTypeInterface(IContainer container, Type interfaceType, TypeRegistration implementationRegistration, KeyValuePair<string, object>[] unmappedAttributes, XmlElement dependency)
         {
-            if (interfaceType != typeof(IDataStore))
-            {
-                base.RegisterConfigTypeInterface(container, interfaceType, implementationRegistration, unmappedAttributes, dependency);
-                return;
-            }
+            //if (interfaceType != typeof(IDataStore))
+            //{
+            //    base.RegisterConfigTypeInterface(container, interfaceType, implementationRegistration, unmappedAttributes, dependency);
+            //    return;
+            //}
 
             // IDataStore registrations get special treatment. The implementation must be disambiguated into Source and Target data stores, 
             // which we do by wrapping it in a ConfigurationDataStore factory and manually registering the apropos interface.

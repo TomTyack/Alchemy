@@ -4,3 +4,6 @@
 /src/Foundation/RankingFoundry/code/obj
 /packages
 /src/Foundation/RankingFoundry/code/bin
+/src/Foundation/RankingFoundry/code/UI/node_modules
+/src/Foundation/RankingFoundry/code/UI/.cache
+/src/Foundation/RankingFoundry/code/UI/dist

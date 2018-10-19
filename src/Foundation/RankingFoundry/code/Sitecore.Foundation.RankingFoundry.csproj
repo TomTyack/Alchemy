@@ -64,9 +64,6 @@
       <HintPath>..\..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rainbow, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Rainbow.Core.2.0.0\lib\net452\Rainbow.dll</HintPath>
-    </Reference>
     <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.8.2.170614\lib\NET452\Sitecore.Kernel.dll</HintPath>
     </Reference>
@@ -111,23 +108,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ControlPanel\Headings\Allthethings.svg.html" />
-    <EmbeddedResource Include="ControlPanel\Headings\April.svg.html" />
-    <EmbeddedResource Include="ControlPanel\Headings\ControlPanel.svg.html" />
-    <EmbeddedResource Include="ControlPanel\Headings\Unicorn.html" />
-    <EmbeddedResource Include="ControlPanel\Headings\unicorn.svg.html" />
-    <EmbeddedResource Include="ControlPanel\Headings\Unicorn2.svg.html" />
-    <EmbeddedResource Include="ControlPanel\Headings\Unicorn3.svg.html" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationUtility.cs" />
     <Compile Include="Configuration\ConfigyConfigurationProvider.cs" />
-    <Compile Include="Configuration\Dependencies\ConfigurationDependencyResolver.cs" />
-    <Compile Include="Configuration\Dependencies\ExplicitConfigurationDependency.cs" />
     <Compile Include="Configuration\Dependencies\IConfigurationDependency.cs" />
-    <Compile Include="Configuration\Dependencies\ImplicitConfigurationDependency.cs" />
-    <Compile Include="Configuration\Dependencies\InterconfigurationDependencyResolver.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />
     <Compile Include="Configuration\FoundryConfigurationManager.cs" />
@@ -137,19 +123,11 @@
     <Compile Include="ControlPanel\ControlPanelPipelineProcessor.cs" />
     <Compile Include="ControlPanel\ControlPanelUtility.cs" />
     <Compile Include="ControlPanel\Controls\AccessDenied.cs" />
-    <Compile Include="ControlPanel\Controls\BatchProcessingControls.cs" />
-    <Compile Include="ControlPanel\Controls\ConfigurationDetails.cs" />
-    <Compile Include="ControlPanel\Controls\ConfigurationInfo.cs" />
-    <Compile Include="ControlPanel\Controls\GlobalWarnings.cs" />
-    <Compile Include="ControlPanel\Controls\Heading.cs" />
     <Compile Include="ControlPanel\Controls\HtmlFooter.cs" />
     <Compile Include="ControlPanel\Controls\HtmlHeadAndStyles.cs" />
     <Compile Include="ControlPanel\Controls\IControlPanelControl.cs" />
-    <Compile Include="ControlPanel\Controls\InitialSetup.cs" />
     <Compile Include="ControlPanel\Controls\Literal.cs" />
-    <Compile Include="ControlPanel\Controls\NoConfigurations.cs" />
-    <Compile Include="ControlPanel\Controls\QuickReference.cs" />
-    <Compile Include="ControlPanel\Headings\HeadingService.cs" />
+    <Compile Include="ControlPanel\Controls\ReactBootstrap.cs" />
     <Compile Include="ControlPanel\Pipelines\UnicornControlPanelRequest\FoundryControlPanelRequestPipelineArgs.cs" />
     <Compile Include="ControlPanel\Pipelines\UnicornControlPanelRequest\HandleAccessDenied.cs" />
     <Compile Include="ControlPanel\Pipelines\UnicornControlPanelRequest\RenderControlPanel.cs" />
@@ -163,9 +141,6 @@
     <Compile Include="ControlPanel\Security\SecurityState.cs" />
     <Compile Include="Pipelines\FoundryDashboardPipelineProcessor.cs" />
     <Compile Include="Pipelines\UnicornExpandConfigurationVariables\UnicornExpandConfigurationVariablesPipelineArgs.cs" />
-    <Compile Include="Predicates\IPredicate.cs" />
-    <Compile Include="Predicates\PredicateResult.cs" />
-    <Compile Include="Predicates\PredicateRootPathResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FoundryVersion.cs" />
   </ItemGroup>
@@ -175,7 +150,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\Rainbow.config" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
@@ -186,7 +160,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
+    <Folder Include="ControlPanel\Headings\" />
+    <Folder Include="Predicates\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
