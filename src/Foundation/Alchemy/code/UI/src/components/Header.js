@@ -6,7 +6,8 @@ const Header = () => (
         <nav className="navbar" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <a className="navbar-item" href="/">
-                    <img className="logo" width="60" src={ParcelLogo} alt=""/><h1>Project Alchemy</h1>
+                    {/* <img className="logo" width="60" src={ParcelLogo} alt=""/> */}
+                    <h1>Project Alchemy</h1>
                 </a>
             </div>
         </nav>
