@@ -1,4 +1,4 @@
-import './../scss/go.scss'
+import './../scss/loader.scss'
 
 // Base React modules.
 const React = require('react');
@@ -7,7 +7,7 @@ const PropTypes = require('prop-types');
 
 import {AlchemyContext} from './AlchemyContext';
 
-const GoButton = createReactClass({
+const ProgressBar = createReactClass({
 
 	/**
 	 * Define the component's properties and their PropTypes.
@@ -56,18 +56,15 @@ const GoButton = createReactClass({
 	render() {
 		if(this.props.visible)
 		{
+			let progress = { width : "40%" };
+
 			return (
-				<div id="btnScan">
+				<div id="alchemyScanProgress">
 					<AlchemyContext.Consumer>
 						{({startScanning}) => (
-							<button onClick={startScanning}>
-								<div className="sonar-wrapper">
-									<div className="sonar-emitter">
-										<div className="sonar-btn">SCAN</div>
-										<div className="sonar-wave"></div>
-									</div>
-								</div>
-							</button>
+							<div className="progress">
+								<div className="progress-bar progress-bar-striped progress-bar-animated" style={progress}></div>
+							</div>
 						)}
 					</AlchemyContext.Consumer>
 				</div>
@@ -77,4 +74,4 @@ const GoButton = createReactClass({
 	}
 });
 
-module.exports = GoButton;
+module.exports = ProgressBar;

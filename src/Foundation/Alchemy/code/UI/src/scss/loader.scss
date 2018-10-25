@@ -113,3 +113,49 @@ $loader-dot--size: 20px;
 }
 
 }
+
+#alchemyScanProgress {
+  position: absolute;
+    top: 300px;
+    z-index: 10;
+    width: 80%; 
+    left: 10%;
+    .progress {
+      background-color: #151F2B;
+    }
+    .progress-bar {
+      background-color: rgba(244, 154, 26, 0.8);
+    }
+}
+
+#progressConsole {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 50%;
+  width: 80%;
+  background: #21374B;
+
+  > div {
+    @media (min-width: 576px)
+    {
+      
+          padding: 1.5rem;
+          margin-right: 0;
+          margin-left: 0;
+          border-width: .2rem;
+    }
+
+    position: relative;
+    padding: 1rem;
+    margin: 1rem -15px 0;
+    border: solid #f7f7f9;
+    border-width: .2rem 0 0;
+  }
+  .col-8{
+    max-height: 350px;
+    overflow-y: scroll;
+  }
+}

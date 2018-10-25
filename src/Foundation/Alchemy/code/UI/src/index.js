@@ -5,6 +5,8 @@ import ReactDOM from "react-dom";
 import Header from './components/Header'
 import Loader from './components/Loader'
 import GoButton from './components/GoButton'
+import ProgressBar from './components/ProgressBar'
+import ProgressConsole from './components/ProgressConsole'
 
 import {AlchemyContext} from './components/AlchemyContext';
 
@@ -19,7 +21,7 @@ class AlchemyApp extends React.Component {
             toggleWaiting : this.toggleWaiting,
             toggleLoading : this.toggleLoading,
             scanning: false,
-            toggleScanning : this.toggleScanning,
+            startScanning : this.startScanning,
         };
       }
 
@@ -33,9 +35,11 @@ class AlchemyApp extends React.Component {
                 loading: val
               }));
           };
-          this.toggleScanning = (val) => {
+          this.startScanning = () => {
+            console.log("toggle scanning " );
             this.setState(state => ({
-                scanning: val
+                scanning: true,
+                waiting: false
               }));
           };
 
@@ -62,6 +66,9 @@ class AlchemyApp extends React.Component {
                     </AlchemyContext.Consumer>
                     
                     <GoButton id="goBtn" visible={this.state.waiting} />
+
+                    <ProgressBar id="progressBar" visible={this.state.scanning} />
+                    <ProgressConsole id="progressConsole" visible={this.state.scanning} />
                 </div>
             </div>
         </AlchemyContext.Provider>);
