@@ -6,7 +6,7 @@ import Header from './components/Header'
 import Loader from './components/Loader'
 import GoButton from './components/GoButton'
 import ProgressBar from './components/ProgressBar'
-import ProgressConsole from './components/ProgressConsole'
+import InteractiveBoard from './components/InteractiveBoard'
 
 import {AlchemyContext} from './components/AlchemyContext';
 
@@ -57,8 +57,7 @@ class AlchemyApp extends React.Component {
             <div>
                 <Header/>
                 <img className="img-fluid" src="https://wccstores.blob.core.windows.net/images/dark-1845065.jpg" alt="Chania"></img>
-                <div>
-                    
+                <div>                    
                     <AlchemyContext.Consumer>
                         {({toggleLoading, toggleWaiting}) => (
                             <Loader id="mainLoader" toggleLoading={toggleLoading} toggleWaiting={this.toggleWaiting}/>
@@ -68,7 +67,8 @@ class AlchemyApp extends React.Component {
                     <GoButton id="goBtn" visible={this.state.waiting} />
 
                     <ProgressBar id="progressBar" visible={this.state.scanning} />
-                    <ProgressConsole id="progressConsole" visible={this.state.scanning} />
+
+                    <InteractiveBoard id="InteractiveBoard" visible={this.state.scanning} />
                 </div>
             </div>
         </AlchemyContext.Provider>);
