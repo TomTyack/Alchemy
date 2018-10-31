@@ -11,3 +11,7 @@
 /src/Foundation/Alchemy/code/obj
 /src/Foundation/Alchemy/code/UI/.cache
 /src/Foundation/Alchemy/code/UI/node_modules
+/src/Foundation/Alchemy/Sitecore.Foundation.AlcehmyRules/bin
+/src/Foundation/Alchemy/Sitecore.Foundation.AlcehmyRules/obj
+/src/Foundation/Alchemy/Sitecore.Foundation.AlchemyBase/obj
+/src/Foundation/Alchemy/Sitecore.Foundation.AlchemyBase/bin

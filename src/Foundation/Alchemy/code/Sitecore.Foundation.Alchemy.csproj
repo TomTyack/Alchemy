@@ -139,6 +139,8 @@
     <Compile Include="ControlPanel\Security\IAlchemyAuthenticationProvider.cs" />
     <Compile Include="ControlPanel\Security\LegacyAuthenticationProvider.cs" />
     <Compile Include="ControlPanel\Security\SecurityState.cs" />
+    <Compile Include="Engine\DefaultAlchmeyRuleEngine.cs" />
+    <Compile Include="Engine\IDefaultAlchmeyRuleEngine.cs" />
     <Compile Include="Pipelines\DashboardPipelineProcessor.cs" />
     <Compile Include="Pipelines\ExpandConfigurationVariables\ExpandConfigurationVariablesPipelineArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -159,7 +161,12 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Sitecore.Foundation.AlchemyBase\Sitecore.Foundation.AlchemyBase.csproj">
+      <Project>{3AF2FB8F-6839-4A90-8FB3-F8A28F3FCDF6}</Project>
+      <Name>Sitecore.Foundation.AlchemyBase</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

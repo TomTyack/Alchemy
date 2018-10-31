@@ -8,6 +8,7 @@ using Configy.Parsing;
 using Sitecore.Configuration;     
 using Sitecore.Diagnostics;    
 using Sitecore.DynamicSerialization;
+using Sitecore.Foundation.Alchemy.Engine;
 
 namespace Sitecore.Foundation.Alchemy.Configuration
 {
@@ -71,7 +72,7 @@ namespace Sitecore.Foundation.Alchemy.Configuration
             foreach (var configuration in configurations)
             {
                 // Assert that expected dependencies exist - and in the case of data stores are specifically singletons (WEIRD things happen otherwise)
-                //configuration.AssertSingleton(typeof(ISourceDataStore));
+                configuration.AssertSingleton(typeof(IDefaultAlchmeyRuleEngine));
                 //configuration.AssertSingleton(typeof(ITargetDataStore));
                 //configuration.Assert(typeof(IEvaluator));
                 //configuration.Assert(typeof(IPredicate));

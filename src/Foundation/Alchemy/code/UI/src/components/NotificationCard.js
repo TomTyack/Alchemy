@@ -5,7 +5,8 @@ const React = require('react');
 const createReactClass = require('create-react-class');
 const PropTypes = require('prop-types');
 
-import { ToastContainer, ToastMessageAnimated, ToastMessageAnimatedProps  } from "react-toastr";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const NotificationCard = createReactClass({
 
@@ -43,14 +44,8 @@ const NotificationCard = createReactClass({
 		};
 	  },
 
-	container: {},
-
-	setContainer(ref) {
-		this.container = ref;
-
-		this.container.success(`hi! Now is ${new Date()}`, `///title\\\\\\`, {
-			closeButton: true,
-		  })
+	notify (){
+		toast("Wow so easy !");
 	},
 
 	/**
@@ -73,18 +68,13 @@ const NotificationCard = createReactClass({
 	render() {
 		let result = (null);
 
-		const ToastMessageFactory = React.createFactory(ToastMessageAnimated);
-
-		ToastMessageFactory.props.timeOut = 50000;
-
 		if(this.props.visible)
 		{
 			result = (
 				<div className="alchemy-card">
 
-					<ToastContainer ref={ref => this.setContainer(ref)} className="toast-top-right"
-					toastMessageFactory={ToastMessageFactory}
-					/>
+					<button onClick={this.notify}>Notify !</button>
+          			<ToastContainer />
 
 				</div>
 				);
