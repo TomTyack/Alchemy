@@ -1,13 +1,11 @@
 import './../scss/card.scss'
 
-
-
 // Base React modules.
 const React = require('react');
 const createReactClass = require('create-react-class');
 const PropTypes = require('prop-types');
 
-import { ToastContainer } from "react-toastr";
+import { ToastContainer, ToastMessageAnimated, ToastMessageAnimatedProps  } from "react-toastr";
 
 const NotificationCard = createReactClass({
 
@@ -74,12 +72,19 @@ const NotificationCard = createReactClass({
 	 */
 	render() {
 		let result = (null);
+
+		const ToastMessageFactory = React.createFactory(ToastMessageAnimated);
+
+		ToastMessageFactory.props.timeOut = 50000;
+
 		if(this.props.visible)
 		{
 			result = (
 				<div className="alchemy-card">
 
-					<ToastContainer ref={ref => this.setContainer(ref)} className="toast-top-right" />
+					<ToastContainer ref={ref => this.setContainer(ref)} className="toast-top-right"
+					toastMessageFactory={ToastMessageFactory}
+					/>
 
 				</div>
 				);
