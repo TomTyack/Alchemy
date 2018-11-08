@@ -106,29 +106,26 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 
         protected override void RegisterConfigTypeInterface(IContainer container, Type interfaceType, TypeRegistration implementationRegistration, KeyValuePair<string, object>[] unmappedAttributes, XmlElement dependency)
         {
-            //if (interfaceType != typeof(IDataStore))
-            //{
-            //    base.RegisterConfigTypeInterface(container, interfaceType, implementationRegistration, unmappedAttributes, dependency);
-            //    return;
-            //}
+			base.RegisterConfigTypeInterface(container, interfaceType, implementationRegistration, unmappedAttributes, dependency);
+			return;
 
-            // IDataStore registrations get special treatment. The implementation must be disambiguated into Source and Target data stores, 
-            // which we do by wrapping it in a ConfigurationDataStore factory and manually registering the apropos interface.
-            //if ("sourceDataStore".Equals(dependency.Name, StringComparison.OrdinalIgnoreCase))
-            //{
-            //    Func<object> wrapperFactory = () => new ConfigurationDataStore(new Lazy<IDataStore>(() => (IDataStore)container.Activate(implementationRegistration.Type, unmappedAttributes)));
+			// IDataStore registrations get special treatment. The implementation must be disambiguated into Source and Target data stores, 
+			// which we do by wrapping it in a ConfigurationDataStore factory and manually registering the apropos interface.
+			//if ("sourceDataStore".Equals(dependency.Name, StringComparison.OrdinalIgnoreCase))
+			//{
+			//    Func<object> wrapperFactory = () => new ConfigurationDataStore(new Lazy<IDataStore>(() => (IDataStore)container.Activate(implementationRegistration.Type, unmappedAttributes)));
 
-            //    container.Register(typeof(ISourceDataStore), wrapperFactory, implementationRegistration.SingleInstance);
+			//    container.Register(typeof(ISourceDataStore), wrapperFactory, implementationRegistration.SingleInstance);
 
-            //    return;
-            //}
+			//    return;
+			//}
 
-            //if ("targetDataStore".Equals(dependency.Name, StringComparison.OrdinalIgnoreCase))
-            //{
-            //    Func<object> wrapperFactory = () => new ConfigurationDataStore(new Lazy<IDataStore>(() => (IDataStore)container.Activate(implementationRegistration.Type, unmappedAttributes)));
+			//if ("targetDataStore".Equals(dependency.Name, StringComparison.OrdinalIgnoreCase))
+			//{
+			//    Func<object> wrapperFactory = () => new ConfigurationDataStore(new Lazy<IDataStore>(() => (IDataStore)container.Activate(implementationRegistration.Type, unmappedAttributes)));
 
-            //    container.Register(typeof(ITargetDataStore), wrapperFactory, implementationRegistration.SingleInstance);
-            //}
-        }
+			//    container.Register(typeof(ITargetDataStore), wrapperFactory, implementationRegistration.SingleInstance);
+			//}
+		}
     }
 }

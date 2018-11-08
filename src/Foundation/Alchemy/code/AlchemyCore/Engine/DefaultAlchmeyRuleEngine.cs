@@ -29,5 +29,10 @@ namespace Sitecore.Foundation.Alchemy.Engine
 				}
 			}
 		}
+
+		public void Begin()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

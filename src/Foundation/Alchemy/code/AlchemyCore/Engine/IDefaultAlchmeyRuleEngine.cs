@@ -8,5 +8,6 @@ namespace Sitecore.Foundation.Alchemy.Engine
 {
 	public interface IDefaultAlchmeyRuleEngine
 	{
+		void Begin();
 	}
 }

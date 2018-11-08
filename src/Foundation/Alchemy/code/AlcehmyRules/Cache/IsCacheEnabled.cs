@@ -6,9 +6,6 @@ namespace Sitecore.Foundation.AlchemyRules.Cache
 {
     public class IsCacheEnabled	: AlchemyRule, IAlchemyRule
     {
-	    private const string ContextSiteNotSetError = "Context Site not set";
-	    private const string FailureReasonMessage = "cacheHtml attribute is not true for site {0}";
-
 		public override void Run()
 	    {
 			var siteInfoList = Sitecore.Configuration.Factory.GetSiteInfoList();
@@ -25,18 +22,16 @@ namespace Sitecore.Foundation.AlchemyRules.Cache
 
 				if (cacheEnabledAllSites || cacheEnabledNonCd)
 			    {
-					Status = Status.Pass;
+					CompletionStatus = CompletionStatus.Pass;
 			    }
 				else
 				{
-					Status = Status.Fail;
-					this.FailureReason = string.Format(FailureReasonMessage, Site);
+					Failed();
 				}
 		    }
 		    else
 		    {
-			    Status = Status.Error;
-			    ErrorMessage = ContextSiteNotSetError;
+			    Errored();
 		    } 
 		} 
     }

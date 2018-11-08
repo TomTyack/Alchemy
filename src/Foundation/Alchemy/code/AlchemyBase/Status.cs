@@ -3,6 +3,11 @@
 	public enum Status
 	{
 		Waiting,
+		Completed
+	}
+
+	public enum CompletionStatus
+	{			
 		Pass,
 		Fail,
 		Error
