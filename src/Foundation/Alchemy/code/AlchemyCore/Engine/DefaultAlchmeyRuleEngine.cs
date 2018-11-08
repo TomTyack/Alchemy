@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Rainbow;
+using Rainbow.Diff.Fields;
 using Sitecore.Diagnostics;
 using Sitecore.Foundation.AlchemyBase;
 
@@ -23,11 +25,9 @@ namespace Sitecore.Foundation.Alchemy.Engine
 			{
 				if (rule.NodeType == XmlNodeType.Element && rule.Name.Equals("alchemyRule"))
 				{
-					FieldComparers.Add(XmlActivator.CreateObject<IFieldComparer>(comparer));
+					AlchemyRules.Add(XmlActivator.CreateObject<IAlchemyRule>(rule));
 				}
 			}
-
-			FieldComparers.Add(new DefaultComparison());
 		}
 	}
 }

@@ -64,6 +64,10 @@
       <HintPath>..\..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Rainbow, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\Rainbow.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Sitecore.Kernel.NoReferences.8.2.170614\lib\NET452\Sitecore.Kernel.dll</HintPath>
     </Reference>
@@ -162,8 +166,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Sitecore.Foundation.AlchemyBase\Sitecore.Foundation.AlchemyBase.csproj">
-      <Project>{3AF2FB8F-6839-4A90-8FB3-F8A28F3FCDF6}</Project>
+    <ProjectReference Include="..\AlchemyBase\Sitecore.Foundation.AlchemyBase.csproj">
+      <Project>{9DD60379-DB15-442F-ACE3-73C5E28BDE1B}</Project>
       <Name>Sitecore.Foundation.AlchemyBase</Name>
     </ProjectReference>
   </ItemGroup>
