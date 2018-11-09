@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.UI;
 using Sitecore.Foundation.Alchemy.ControlPanel.Controls;
 using Sitecore.SecurityModel;
@@ -23,35 +26,52 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel.Responses
 			response.StatusCode = 200;
 			response.ContentType = "text/html";
 
-			var masterControls = new List<IControlPanelControl>();
+		    var masterControls = new List<IControlPanelControl>();
 
-			masterControls.AddRange(CreateHeaderControls(_securityState));
-			
-			masterControls.AddRange(_controls);
+            string content = string.Empty;
 
-			masterControls.AddRange(CreateFooterControls());
+            using (StreamReader sr = new StreamReader(VirtualPathProvider.OpenFile("/scripts/Alchemy/index.html")))
+		    {
+		        content = sr.ReadToEnd();
+		    }
 
-			using (var writer = new HtmlTextWriter(response.Output))
-			{
-				// this securitydisabler allows the control panel to execute unfettered when debug compilation is enabled but you are not signed into Sitecore
-				using (new SecurityDisabler())
-				{
-					foreach (var control in masterControls)
-						control.Render(writer);
-				}
-			}
+		    if (string.IsNullOrEmpty(content))
+		    {
+                masterControls.AddRange(CreateHeaderControls(_securityState));
 
-			response.End();
+                masterControls.AddRange(_controls);
+
+                masterControls.AddRange(CreateFooterControls());
+            }
+
+            using (var writer = new HtmlTextWriter(response.Output))
+            {
+                // this securitydisabler allows the control panel to execute unfettered when debug compilation is enabled but you are not signed into Sitecore
+                using (new SecurityDisabler())
+                {
+                    if (masterControls.Any())
+                    {
+                        foreach (var control in masterControls)
+                            control.Render(writer);
+                    }
+                    else
+                    {
+                        content = content.Replace("\"/src", "\"/scripts/Alchemy/src");
+                        writer.Write(content);
+                    }
+                }
+            }
+            response.End();
 		}
 
-		protected virtual IEnumerable<IControlPanelControl> CreateHeaderControls(SecurityState securityState)
-		{
-			yield return new HtmlHeadAndStyles();
-		}
+        protected virtual IEnumerable<IControlPanelControl> CreateHeaderControls(SecurityState securityState)
+        {
+            yield return new HtmlHeadAndStyles();
+        }
 
-		protected virtual IEnumerable<IControlPanelControl> CreateFooterControls()
-		{
-			yield return new HtmlFooter();
-		} 
-	}
+        protected virtual IEnumerable<IControlPanelControl> CreateFooterControls()
+        {
+            yield return new HtmlFooter();
+        }
+    }
 }

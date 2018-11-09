@@ -2,3 +2,8 @@ https://scotch.io/tutorials/setting-up-a-react-project-with-parcel
 https://parceljs.org/getting_started.html
 https://parceljs.org/production.html
 https://reactjs.org/docs/context.html#updating-context-from-a-nested-component
+
+
+From the UI folder 
+Production:  npm run build
+FED Development:  npm run start
