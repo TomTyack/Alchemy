@@ -15,8 +15,10 @@ namespace Sitecore.Foundation.Alchemy.Controller.API
     [EnableCors("*", "*", "GET")]
     public class AlchemyApiController : ServicesApiController
     {
+        private IDefaultAlchmeyRuleEngine _ruleEngine;
         public AlchemyApiController()
-        {                                       
+        {
+            _ruleEngine = AlchemyConfigurationManager.Configurations.FirstOrDefault(configuration => configuration.Resolve<IDefaultAlchmeyRuleEngine>() != null) as IDefaultAlchmeyRuleEngine;
         }
 
         [HttpGet]
@@ -24,12 +26,18 @@ namespace Sitecore.Foundation.Alchemy.Controller.API
         [Route("alchemy/api/rules/run/")]
         public HttpResponseMessage RunRulesEngine([FromUri] string classexternalid)
         {
-	        IDefaultAlchmeyRuleEngine ruleEngine = AlchemyConfigurationManager.Configurations.FirstOrDefault(configuration => configuration.Resolve<IDefaultAlchmeyRuleEngine>() != null) as IDefaultAlchmeyRuleEngine;
-
-	        ruleEngine.Begin();
+	        _ruleEngine.Begin();
 
             return Request.CreateResponse(HttpStatusCode.OK,
                 new WebApiResponse("NotAvailable", "The class did not have an introduction text."));
+        }
+
+        [HttpGet]
+        //[BasicAuthentication("User", "ssLK")]
+        [Route("alchemy/api/rules/ruleslist/")]
+        public HttpResponseMessage GetRulesList()
+        {
+            return this.Request.CreateResponse(_ruleEngine.GetRulesList());
         }
     }
 }

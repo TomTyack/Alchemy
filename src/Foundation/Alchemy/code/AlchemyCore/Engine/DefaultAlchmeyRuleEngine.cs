@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Rainbow;
-using Rainbow.Diff.Fields;
 using Sitecore.Diagnostics;
+using Sitecore.Foundation.Alchemy.Configuration;
 using Sitecore.Foundation.AlchemyBase;
+using Sitecore.Foundation.AlchemyBase.ResponseWrapper;
 
 namespace Sitecore.Foundation.Alchemy.Engine
 {
@@ -32,7 +32,12 @@ namespace Sitecore.Foundation.Alchemy.Engine
 
 		public void Begin()
 		{
-			throw new NotImplementedException();
+		    
 		}
-	}
+
+	    public IWebApiResponse<List<IAlchemyRule>> GetRulesList()
+	    {
+	        return new WebApiResponse<List<IAlchemyRule>>(AlchemyRules);
+        }
+    }
 }

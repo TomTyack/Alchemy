@@ -15,11 +15,11 @@
 /src/Foundation/Alchemy/Sitecore.Foundation.AlcehmyRules/obj
 /src/Foundation/Alchemy/Sitecore.Foundation.AlchemyBase/obj
 /src/Foundation/Alchemy/Sitecore.Foundation.AlchemyBase/bin
-/src/Foundation/Alchemy/code/AlcehmyRules/bin
 /src/Foundation/Alchemy/code/AlcehmyRules/obj
-/src/Foundation/Alchemy/code/AlchemyBase/bin
+/src/Foundation/Alchemy/code/AlcehmyRules/bin
 /src/Foundation/Alchemy/code/AlchemyBase/obj
+/src/Foundation/Alchemy/code/AlchemyBase/bin
 /src/Foundation/Alchemy/code/AlchemyCore/obj
 /src/Foundation/Alchemy/code/AlchemyCore/bin
-/src/Foundation/Alchemy/code/AlchemyCore/UI/.cache
 /src/Foundation/Alchemy/code/AlchemyCore/UI/node_modules
+/src/Foundation/Alchemy/code/AlchemyCore/UI/.cache

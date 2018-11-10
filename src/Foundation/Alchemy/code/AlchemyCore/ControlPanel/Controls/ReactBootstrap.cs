@@ -13,7 +13,7 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel.Controls
 			writer.Write(@"<h2>Alchemy</h2>");
 
 			writer.Write("<section>");
-			writer.Write("<h1>Loading</h1>");
+			writer.Write("<h1>This screen should look a lot different. Don't forget to copy the Alchemy folder to /Website/scripts/Alchemy</h1>");
 			writer.Write("</section>");
 
 		    writer.Write("<div id=\"app\">");
