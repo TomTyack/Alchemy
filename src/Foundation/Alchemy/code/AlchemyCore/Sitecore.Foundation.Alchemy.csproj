@@ -132,7 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationUtility.cs" />
-    <Compile Include="Configuration\ConfigyConfigurationProvider.cs" />
+    <Compile Include="Configuration\AlchemyConfigurationProvider.cs" />
     <Compile Include="Configuration\Dependencies\IConfigurationDependency.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />

@@ -13,20 +13,20 @@ using Sitecore.Foundation.Alchemy.Engine;
 namespace Sitecore.Foundation.Alchemy.Configuration
 {
     /// <summary>
-    /// Reads Unicorn dependency configurations from XML (e.g. Sitecore web.config section sitecore/unicorn)
+    /// Reads Alchemy dependency configurations from XML (e.g. Sitecore web.config section sitecore/alchemy)
     /// </summary>
-    public class ConfigyConfigurationProvider : XmlContainerBuilder, IConfigurationProvider
+    public class AlchemyConfigurationProvider : XmlContainerBuilder, IConfigurationProvider
     {
         private IConfiguration[] _configurations;
 
-        public ConfigyConfigurationProvider() : this(new PipelineBasedVariablesReplacer())
+        public AlchemyConfigurationProvider() : base(null)
         {
         }
 
-        protected ConfigyConfigurationProvider(IContainerDefinitionVariablesReplacer variablesReplacer) : base(variablesReplacer)
-        {
+        //protected AlchemyConfigurationProvider(IContainerDefinitionVariablesReplacer variablesReplacer) : base(variablesReplacer)
+        //{
 
-        }
+        //}
 
         public IConfiguration[] Configurations
         {
@@ -54,10 +54,10 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 
             Assert.IsNotNull(defaultsNode, "Alchemy <defaults> node not found. It should be under <Alchemy> config section.");
 
-            var configurationNodes = configNode.SelectNodes("./configurations/configuration");
+            var ruleNodes = configNode.SelectNodes("./configurations/configuration");
 
             // no configs let's get outta here
-            if (configurationNodes == null || configurationNodes.Count == 0)
+            if (ruleNodes == null || ruleNodes.Count == 0)
             {
                 _configurations = new IConfiguration[0];
                 return;
@@ -76,7 +76,7 @@ namespace Sitecore.Foundation.Alchemy.Configuration
                 //configuration.AssertSingleton(typeof(ITargetDataStore));
                 //configuration.Assert(typeof(IEvaluator));
                 //configuration.Assert(typeof(IPredicate));
-                configuration.Assert(typeof(ILogger));
+                //configuration.Assert(typeof(ILogger));
                 //configuration.Assert(typeof(ISerializationLoaderLogger));
                 //configuration.Assert(typeof(IConsistencyChecker));
                 //configuration.Assert(typeof(IDeserializeFailureRetryer));
@@ -95,13 +95,13 @@ namespace Sitecore.Foundation.Alchemy.Configuration
         {
             var description = GetAttributeValue(definition.Definition, "description");
 
-            var attributeValue = GetAttributeValue(definition.Definition, "dependencies");
-            var dependencies = !string.IsNullOrEmpty(attributeValue) ? attributeValue.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries) : null;
+            //var attributeValue = GetAttributeValue(definition.Definition, "dependencies");
+            //var dependencies = !string.IsNullOrEmpty(attributeValue) ? attributeValue.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries) : null;
 
-            var ignoredAttributeValue = GetAttributeValue(definition.Definition, "ignoredImplicitDependencies");
-            var ignoredDependencies = !string.IsNullOrEmpty(ignoredAttributeValue) ? ignoredAttributeValue.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries) : null;
+            //var ignoredAttributeValue = GetAttributeValue(definition.Definition, "ignoredImplicitDependencies");
+            //var ignoredDependencies = !string.IsNullOrEmpty(ignoredAttributeValue) ? ignoredAttributeValue.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries) : null;
 
-            return new MicroConfiguration(definition.Name, description, definition.Extends, dependencies, ignoredDependencies);
+            return new MicroConfiguration(definition.Name, description, definition.Extends);
         }
 
         protected override void RegisterConfigTypeInterface(IContainer container, Type interfaceType, TypeRegistration implementationRegistration, KeyValuePair<string, object>[] unmappedAttributes, XmlElement dependency)

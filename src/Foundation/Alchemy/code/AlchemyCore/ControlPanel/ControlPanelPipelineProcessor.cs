@@ -4,7 +4,6 @@ using System.Web;
 using Sitecore.Configuration;
 using Sitecore.Foundation.Alchemy.Configuration;
 using Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.ControlPanelRequest;
-using Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.UnicornControlPanelRequest;
 using Sitecore.Foundation.Alchemy.ControlPanel.Responses;
 using Sitecore.Pipelines;
 using Sitecore.Pipelines.HttpRequest;
@@ -47,12 +46,16 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel
 					using (new SiteContextSwitcher(Factory.GetSite(_activationSite)))
 					{
 						ProcessRequest(args.Context);
-						args.Context.Response.End();
+
+                        if(!IsApiContext)
+						    args.Context.Response.End();
 					}
 				}
 			}
 		}
-
+        
+        public bool IsApiContext => HttpContext.Current.Request.Url.PathAndQuery.IndexOf("/api/") > -1;
+                    
 		public virtual void ProcessRequest(HttpContext context)
 		{
 			context.Server.ScriptTimeout = 86400;
@@ -61,8 +64,8 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel
 			context.Response.Headers["X-Frame-Options"] = "SAMEORIGIN";
 
 			var verb = context.Request.QueryString["verb"];
-
-			var authProvider = AlchemyConfigurationManager.AuthenticationProvider;
+                      
+            var authProvider = AlchemyConfigurationManager.AuthenticationProvider;
 			SecurityState securityState;
 			if (authProvider != null)
 			{
@@ -73,22 +76,25 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel
 			// this securitydisabler allows the control panel to execute unfettered when debug compilation is enabled but you are not signed into Sitecore
 			using (new SecurityDisabler())
 			{
-				var pipelineArgs = new ControlPanelRequestPipelineArgs(verb, new HttpContextWrapper(context), securityState);
+			    if (securityState.IsAllowed)
+			    {
+			        context.Response.AddHeader("X-Alchemy-Version", AlchemyVersion.Current);
+			    }
 
-				CorePipeline.Run("AlchemyControlPanelRequest", pipelineArgs, true);
+                if (!IsApiContext)
+			    {
+			        var pipelineArgs = new ControlPanelRequestPipelineArgs(verb, new HttpContextWrapper(context), securityState);
 
-				if (pipelineArgs.Response == null)
-				{
-					pipelineArgs.Response = new PlainTextResponse("Not Found", HttpStatusCode.NotFound);
-				}
+                    CorePipeline.Run("AlchemyControlPanelRequest", pipelineArgs, true);
 
-				if (securityState.IsAllowed)
-				{
-					context.Response.AddHeader("X-Companion-Version", AlchemyVersion.Current);
-				}
-				
-				pipelineArgs.Response.Execute(new HttpResponseWrapper(context.Response));
-			}
+			        if (pipelineArgs.Response == null)
+			        {
+			            pipelineArgs.Response = new PlainTextResponse("Not Found", HttpStatusCode.NotFound);
+			        }
+
+                    pipelineArgs.Response.Execute(new HttpResponseWrapper(context.Response));
+                }
+            }
 		}
 	}
 }

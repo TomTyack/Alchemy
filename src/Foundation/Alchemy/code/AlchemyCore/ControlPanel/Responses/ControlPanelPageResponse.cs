@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.UI;
+using Sitecore.Configuration;
 using Sitecore.Foundation.Alchemy.ControlPanel.Controls;
 using Sitecore.SecurityModel;
 using SecurityState = Sitecore.Foundation.Alchemy.ControlPanel.Security.SecurityState;
@@ -30,7 +31,9 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel.Responses
 
             string content = string.Empty;
 
-            using (StreamReader sr = new StreamReader(VirtualPathProvider.OpenFile("/scripts/Alchemy/index.html")))
+			string uiLocationFolder = Settings.GetSetting("Unicorn.DisableFastQueryWarning", "/UI/dist/");
+                              
+            using (StreamReader sr = new StreamReader(VirtualPathProvider.OpenFile($"{uiLocationFolder}index.html")))
 		    {
 		        content = sr.ReadToEnd();
 		    }
@@ -56,7 +59,7 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel.Responses
                     }
                     else
                     {
-                        content = content.Replace("\"/src", "\"/scripts/Alchemy/src");
+                        content = content.Replace("\"/src", $"\"{uiLocationFolder}src");
                         writer.Write(content);
                     }
                 }

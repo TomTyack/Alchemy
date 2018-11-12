@@ -13,21 +13,21 @@ namespace Sitecore.Foundation.Alchemy.Engine
 {
 	public class DefaultAlchmeyRuleEngine : IDefaultAlchmeyRuleEngine
 	{
-		protected readonly List<IAlchemyRule> AlchemyRules = new List<IAlchemyRule>();
+		//protected readonly List<IAlchemyRule> AlchemyRules = new List<IAlchemyRule>();
 
 		public DefaultAlchmeyRuleEngine(XmlNode configNode)
 		{
 			Assert.ArgumentNotNull(configNode, "configNode");
 
-			var rules = configNode.ChildNodes;
+			//var rules = configNode.ChildNodes;
 
-			foreach (XmlNode rule in rules)
-			{
-				if (rule.NodeType == XmlNodeType.Element && rule.Name.Equals("alchemyRule"))
-				{
-					AlchemyRules.Add(XmlActivator.CreateObject<IAlchemyRule>(rule));
-				}
-			}
+			//foreach (XmlNode rule in rules)
+			//{
+			//	if (rule.NodeType == XmlNodeType.Element && rule.Name.Equals("alchemyRule"))
+			//	{
+			//		AlchemyRules.Add(XmlActivator.CreateObject<IAlchemyRule>(rule));
+			//	}
+			//}
 		}
 
 		public void Begin()
@@ -37,7 +37,7 @@ namespace Sitecore.Foundation.Alchemy.Engine
 
 	    public IWebApiResponse<List<IAlchemyRule>> GetRulesList()
 	    {
-	        return new WebApiResponse<List<IAlchemyRule>>(AlchemyRules);
+	        return new WebApiResponse<List<IAlchemyRule>>();
         }
     }
 }

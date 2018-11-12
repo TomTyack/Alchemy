@@ -4,11 +4,11 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 {
 	public class MicroConfiguration : MicroContainer, IConfiguration
 	{
-		public MicroConfiguration(string name, string description, string extends, string[] dependencies, string[] ignoredDependencies) : base(name, extends)
+		public MicroConfiguration(string name, string description, string extends) : base(name, extends)
 		{
 			Description = description;
-			Dependencies = dependencies ?? new string[0];
-			IgnoredImplicitDependencies = ignoredDependencies ?? new string[0];
+			//Dependencies = dependencies ?? new string[0];
+			//IgnoredImplicitDependencies = ignoredDependencies ?? new string[0];
 		}
 
 		public string Description { get; }

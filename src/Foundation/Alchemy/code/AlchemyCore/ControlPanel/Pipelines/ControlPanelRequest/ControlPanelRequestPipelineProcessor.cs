@@ -1,8 +1,7 @@
 ﻿using System;
-using Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.ControlPanelRequest;
 using Sitecore.Foundation.Alchemy.ControlPanel.Responses;
 
-namespace Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.UnicornControlPanelRequest
+namespace Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.ControlPanelRequest
 {
 	public abstract class ControlPanelRequestPipelineProcessor
 	{

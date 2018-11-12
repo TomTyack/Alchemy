@@ -1,13 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Foundation.Alchemy.Configuration;
-using Sitecore.Foundation.Alchemy.Configuration.Dependencies;
 using Sitecore.Foundation.Alchemy.ControlPanel.Controls;
-using Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.ControlPanelRequest;
 using Sitecore.Foundation.Alchemy.ControlPanel.Responses;
-using Sitecore.StringExtensions;
 
-namespace Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.UnicornControlPanelRequest
+namespace Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.ControlPanelRequest
 {
 	public class RenderControlPanel : ControlPanelRequestPipelineProcessor
 	{

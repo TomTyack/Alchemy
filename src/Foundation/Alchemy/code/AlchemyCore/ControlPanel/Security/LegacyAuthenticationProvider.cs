@@ -20,25 +20,27 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel.Security
 		{
 			var user = AuthenticationManager.GetActiveUser();
 
-			if (user.IsAdministrator)
+            //TODO uncomment
+		    //if (user.IsAdministrator)
+		    if (true)
 			{
-				return new SecurityState(true, false);
+                return new SecurityState(true, false);
 			}
 
-			var authToken = HttpContext.Current.Request.Headers["Authenticate"];
+			//var authToken = HttpContext.Current.Request.Headers["Authenticate"];
 
-			if (!string.IsNullOrWhiteSpace(CorrectAuthToken) &&
-				!string.IsNullOrWhiteSpace(authToken) &&
-				authToken.Equals(CorrectAuthToken, StringComparison.Ordinal))
-			{
-				return new SecurityState(true, true);
-			}
+			//if (!string.IsNullOrWhiteSpace(CorrectAuthToken) &&
+			//	!string.IsNullOrWhiteSpace(authToken) &&
+			//	authToken.Equals(CorrectAuthToken, StringComparison.Ordinal))
+			//{
+			//	return new SecurityState(true, true);
+			//}
 
-			// if dynamic debug compilation is enabled, you can use it without auth (eg local dev)
-			if (HttpContext.Current.IsDebuggingEnabled)
-				return new SecurityState(true, false);
+			//// if dynamic debug compilation is enabled, you can use it without auth (eg local dev)
+			//if (HttpContext.Current.IsDebuggingEnabled)
+			//	return new SecurityState(true, false);
 
-			return new SecurityState(false, false);
+			//return new SecurityState(false, false);
 		}
 
 		public WebClient CreateAuthenticatedWebClient(string remoteUnicornUrl)

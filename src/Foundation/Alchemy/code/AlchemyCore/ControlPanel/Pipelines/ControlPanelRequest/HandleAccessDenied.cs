@@ -1,9 +1,8 @@
 ﻿using System.Net;
 using Sitecore.Foundation.Alchemy.ControlPanel.Controls;
-using Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.ControlPanelRequest;
 using Sitecore.Foundation.Alchemy.ControlPanel.Responses;
 
-namespace Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.UnicornControlPanelRequest
+namespace Sitecore.Foundation.Alchemy.ControlPanel.Pipelines.ControlPanelRequest
 {
 	public class HandleAccessDenied : ControlPanelRequestPipelineProcessor
 	{
