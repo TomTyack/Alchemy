@@ -17,12 +17,11 @@ namespace Sitecore.Foundation.Alchemy.Controller.API
     [EnableCors("*", "*", "GET")]
     public class AlchemyApiController : ServicesApiController
     {
-        private List<IAlchemyRule> _ruleEngines;
+        private List<IDefaultAlchmeyRuleSet> _ruleEngines;
         public AlchemyApiController()
-        {
-            //_ruleEngine = AlchemyConfigurationManager.Configurations.FirstOrDefault(configuration => configuration.Resolve<IDefaultAlchmeyRuleEngine>() != null) as IDefaultAlchmeyRuleEngine;
-            _ruleEngines = AlchemyConfigurationManager.Configurations.Select(configuration => configuration.Resolve<IAlchemyRule>()).ToList();
-
+        {                                                                                                                                                                                       
+            var array = AlchemyConfigurationManager.Configurations.Select(configuration => configuration.Resolve<IDefaultAlchmeyRuleSet>()).ToArray();
+	        _ruleEngines = array.ToList();
         }
 
         [HttpGet]
@@ -38,10 +37,17 @@ namespace Sitecore.Foundation.Alchemy.Controller.API
 
         [HttpGet]
         //[BasicAuthentication("User", "ssLK")]
+        [Route("alchemy/api/rules/rulescount/")]
+        public HttpResponseMessage GetRulesCount()
+        {
+            return this.Request.CreateResponse(_ruleEngines.Select(x => x.GetRulesList()).Count());
+        }
+
+        [HttpGet]                                
         [Route("alchemy/api/rules/ruleslist/")]
         public HttpResponseMessage GetRulesList()
         {
-            return this.Request.CreateResponse(_ruleEngines.Count);
+            return this.Request.CreateResponse(_ruleEngines.Select(x => x.GetRulesList()));
         }
     }
 }

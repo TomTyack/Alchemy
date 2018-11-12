@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sitecore.Foundation.AlchemyBase;
 
 namespace Sitecore.Foundation.Alchemy.Configuration
 {
@@ -18,6 +19,7 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 		}
 
 		public string Name => _innerConfiguration.Name;
+		public List<IAlchemyRule> AlchemyRules => _innerConfiguration.AlchemyRules;
 		public string Description => _innerConfiguration.Description;
 		public string Extends => _innerConfiguration.Extends;
 		public string[] Dependencies => _innerConfiguration.Dependencies;
@@ -27,8 +29,8 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 		{
 			return _innerConfiguration.Resolve<T>();
 		}
-
-		public object Resolve(Type type)
+		  
+        public object Resolve(Type type)
 		{
 			return _innerConfiguration.Resolve(type);
 		}

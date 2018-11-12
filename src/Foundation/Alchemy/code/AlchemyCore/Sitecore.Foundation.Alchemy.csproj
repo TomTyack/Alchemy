@@ -161,7 +161,8 @@
     <Compile Include="ControlPanel\Security\IAlchemyAuthenticationProvider.cs" />
     <Compile Include="ControlPanel\Security\LegacyAuthenticationProvider.cs" />
     <Compile Include="ControlPanel\Security\SecurityState.cs" />
-    <Compile Include="Engine\DefaultAlchmeyRuleEngine.cs" />
+    <Compile Include="Engine\RuleEngine.cs" />
+    <Compile Include="Engine\IRules.cs" />
     <Compile Include="Engine\IDefaultAlchmeyRuleEngine.cs" />
     <Compile Include="Pipelines\DashboardPipelineProcessor.cs" />
     <Compile Include="Pipelines\ExpandConfigurationVariables\ExpandConfigurationVariablesPipelineArgs.cs" />

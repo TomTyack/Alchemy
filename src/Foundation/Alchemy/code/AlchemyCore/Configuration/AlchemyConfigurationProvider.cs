@@ -9,6 +9,7 @@ using Sitecore.Configuration;
 using Sitecore.Diagnostics;    
 using Sitecore.DynamicSerialization;
 using Sitecore.Foundation.Alchemy.Engine;
+using Sitecore.Foundation.AlchemyBase;
 
 namespace Sitecore.Foundation.Alchemy.Configuration
 {
@@ -72,7 +73,7 @@ namespace Sitecore.Foundation.Alchemy.Configuration
             foreach (var configuration in configurations)
             {
                 // Assert that expected dependencies exist - and in the case of data stores are specifically singletons (WEIRD things happen otherwise)
-                configuration.AssertSingleton(typeof(IDefaultAlchmeyRuleEngine));
+                //configuration.AssertSingleton(typeof(IDefaultAlchmeyRuleEngine));
                 //configuration.AssertSingleton(typeof(ITargetDataStore));
                 //configuration.Assert(typeof(IEvaluator));
                 //configuration.Assert(typeof(IPredicate));
@@ -94,14 +95,7 @@ namespace Sitecore.Foundation.Alchemy.Configuration
         protected override IContainer CreateContainer(ContainerDefinition definition)
         {
             var description = GetAttributeValue(definition.Definition, "description");
-
-            //var attributeValue = GetAttributeValue(definition.Definition, "dependencies");
-            //var dependencies = !string.IsNullOrEmpty(attributeValue) ? attributeValue.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries) : null;
-
-            //var ignoredAttributeValue = GetAttributeValue(definition.Definition, "ignoredImplicitDependencies");
-            //var ignoredDependencies = !string.IsNullOrEmpty(ignoredAttributeValue) ? ignoredAttributeValue.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries) : null;
-
-            return new MicroConfiguration(definition.Name, description, definition.Extends);
+			return new MicroConfiguration(definition.Name, description, definition.Extends);
         }
 
         protected override void RegisterConfigTypeInterface(IContainer container, Type interfaceType, TypeRegistration implementationRegistration, KeyValuePair<string, object>[] unmappedAttributes, XmlElement dependency)

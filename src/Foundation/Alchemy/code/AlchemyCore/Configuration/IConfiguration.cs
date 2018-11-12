@@ -1,4 +1,6 @@
-﻿using Configy.Containers;
+﻿using System.Collections.Generic;
+using Configy.Containers;
+using Sitecore.Foundation.AlchemyBase;
 
 namespace Sitecore.Foundation.Alchemy.Configuration
 {
@@ -7,6 +9,8 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 	/// </summary>
 	public interface IConfiguration : IContainer
 	{
+		List<IAlchemyRule> AlchemyRules { get; }
+
 		/// <summary>
 		/// A description of what this configuration is for. Displayed in control panel if present.
 		/// </summary>

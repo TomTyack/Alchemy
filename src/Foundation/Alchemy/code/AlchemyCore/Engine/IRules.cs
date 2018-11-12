@@ -9,9 +9,8 @@ using Sitecore.Foundation.AlchemyBase.ResponseWrapper;
 
 namespace Sitecore.Foundation.Alchemy.Engine
 {
-	public interface IDefaultAlchmeyRuleSet
-	{
-		void Begin();
-	    List<IAlchemyRule> GetRulesList();
-	}
+	public interface Rules
+	{                        
+	    List<IAlchemyRule> AlchemyRule { get; set; }
+	}                                                                           
 }
