@@ -8,7 +8,7 @@ namespace Sitecore.Foundation.AlchemyRules.Cache
     {
 		public override void Run()
 	    {
-			var siteInfoList = Sitecore.Configuration.Factory.GetSiteInfoList();
+			var siteInfoList = Configuration.Factory.GetSiteInfoList();
 
 		    if (siteInfoList.Any(x => x.Name == Site))
 		    {

@@ -18,14 +18,16 @@ namespace Sitecore.Foundation.Alchemy.Engine
 		public RuleEngine(XmlNode configNode)
 		{
 			Assert.ArgumentNotNull(configNode, "configNode");
-
             var rules = configNode.ChildNodes;
 
             foreach (XmlNode rule in rules)
             {
                 if (rule.NodeType == XmlNodeType.Element && rule.Name.Equals("alchemyRule"))
                 {
-                    AlchemyRules.Add(XmlActivator.CreateObject<IAlchemyRule>(rule));
+                    var ruleDefinition = new RuleDefinition(rule);
+                    var ruleb = XmlActivator.CreateObject<IAlchemyRule>(rule);
+                    ruleb.Inject(ruleDefinition);
+                    AlchemyRules.Add(ruleb);
                 }
             }
         }

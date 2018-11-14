@@ -7,18 +7,15 @@ namespace Sitecore.Foundation.AlchemyBase
 	{
 		public AlchemyRule()
 		{
-			Status = Status.Waiting;
-			ConfigurationRole = ConfigurationRole.All;
-			Site = "website";
+			Status = Status.Waiting;  
 			if(RuleDependencies == null)
 				RuleDependencies = new List<IAlchemyRule>();
-
-			DefaultFailureMessage = "We encountered an error processing this rule";
-		    DefaultErrorMessage = "Rule did not pass";
 		}
 
 
-		public string ErrorMessage { get; set; }
+	    public string Name { get; set; }
+
+        public string ErrorMessage { get; set; }
 		public string FailureReason { get; set; }
 		public string DefaultFailureMessage { get; set; }
 		public string DefaultErrorMessage { get; set; }
@@ -35,13 +32,29 @@ namespace Sitecore.Foundation.AlchemyBase
 		public string Site { get; set; }
 
 		public RuleDocumentation DocumentationType { get; set; }
-		public string DocumentationLink { get; set; }
+	    public string DocumentationLink { get; set; }
 
-		public bool IsProductionCDServer { get; set; }
+        public bool IsProductionCDServer { get; set; }
 
-		public abstract void Run();
+	    public abstract void Run();
 
-		public bool CheckDependencies()
+	    public void Inject(RuleDefinition definition)
+	    {
+	        this.Name = definition.Name;
+	        this.CompletionStatus = definition.CompletionStatus;
+	        this.ConfigurationRole = definition.ConfigurationRole;
+	        this.DefaultErrorMessage = definition.DefaultErrorMessage;
+	        this.DefaultFailureMessage = definition.DefaultFailureMessage;
+	        this.DocumentationLink = definition.DocumentationLink;
+	        this.DocumentationType = definition.DocumentationType;
+	        this.ErrorMessage = definition.ErrorMessage;
+	        this.FailureReason = definition.FailureReason;
+	        this.Importance = definition.Importance;
+	        this.IsProductionCDServer = definition.IsProductionCDServer;
+	        this.Score = definition.Score;
+	    }
+
+        public bool CheckDependencies()
 		{
 			if (RuleDependencies.Any(x => x.Status != Status.Completed))
 			{
