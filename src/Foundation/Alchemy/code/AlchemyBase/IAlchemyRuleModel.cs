@@ -29,9 +29,6 @@ namespace Sitecore.Foundation.AlchemyBase
 		RuleDocumentation DocumentationType { get; set; }
 		string DocumentationLink { get; set; }
 
-		string ErrorMessage { get; set; }
-		string FailureReason { get; set; }
-
 		string DefaultFailureMessage { get; set; }
 		string DefaultErrorMessage { get; set; }
 

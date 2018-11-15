@@ -43,16 +43,20 @@ namespace Sitecore.Foundation.AlchemyBase
 	        this.Name = definition.Name;
 	        this.CompletionStatus = definition.CompletionStatus;
 	        this.ConfigurationRole = definition.ConfigurationRole;
-	        this.DefaultErrorMessage = definition.DefaultErrorMessage;
+	        this.Site = definition.Site;
+
+            this.DefaultErrorMessage = definition.DefaultErrorMessage;
 	        this.DefaultFailureMessage = definition.DefaultFailureMessage;
+
 	        this.DocumentationLink = definition.DocumentationLink;
 	        this.DocumentationType = definition.DocumentationType;
-	        this.ErrorMessage = definition.ErrorMessage;
-	        this.FailureReason = definition.FailureReason;
+	        //this.ErrorMessage = definition.ErrorMessage;
+	        //this.FailureReason = definition.FailureReason;
 	        this.Importance = definition.Importance;
 	        this.IsProductionCDServer = definition.IsProductionCDServer;
 	        this.Score = definition.Score;
-	    }
+	        
+        }
 
         public bool CheckDependencies()
 		{

@@ -25,11 +25,13 @@ namespace Sitecore.Foundation.AlchemyBase
         public ConfigurationRole ConfigurationRole { get { return ParseEnum<ConfigurationRole>("ConfigurationRole", ConfigurationRole.ContentManagement); } set { } }
         public string Site { get { return GetStringValue("Site"); } set { } }
         public RuleDocumentation DocumentationType { get { return ParseEnum<RuleDocumentation>("RuleDocumentation", RuleDocumentation.Other); } set { } }
-        public string DocumentationLink { get { return GetStringValue("DocumentationLink"); } set { } }
-        public string ErrorMessage { get { return GetStringValue("ErrorMessage"); } set { } }
-        public string FailureReason { get { return GetStringValue("FailureReason"); } set { } }
-        public string DefaultFailureMessage { get { return GetStringValue("DefaultFailureMessage"); } set { } }
-        public string DefaultErrorMessage { get { return GetStringValue("DefaultErrorMessage"); } set { } }
+        public string DocumentationLink { get { return GetStringValue("DocumentationLink", true); } set { } }
+
+        //public string ErrorMessage { get { return GetStringValue("ErrorMessage"); } set { } }
+        //public string FailureReason { get { return GetStringValue("FailureReason"); } set { } }
+
+        public string DefaultFailureMessage { get { return GetStringValue("DefaultFailureMessage", true); } set { } }
+        public string DefaultErrorMessage { get { return GetStringValue("DefaultErrorMessage", true); } set { } }
 
 	    public bool IsProductionCDServer
 	    {
@@ -39,9 +41,20 @@ namespace Sitecore.Foundation.AlchemyBase
 		    } set { }
 	    }
 
-        public string GetStringValue(string attributeName)
+        public string GetStringValue(string attributeName, bool childElement = false)
         {
-            XmlAttributeCollection attributes = this.Definition.Attributes;
+            var xmlNode = this.Definition;
+
+            if (childElement)
+            {
+                var elementValue = xmlNode.SelectSingleNode("./"+ attributeName);
+                if (elementValue != null)
+                {
+                    return elementValue.InnerText;
+                }
+            }
+
+            XmlAttributeCollection attributes = xmlNode.Attributes;
             if (attributes == null)
                 return (string)null;
             XmlAttribute xmlAttribute = attributes[attributeName];

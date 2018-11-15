@@ -9,6 +9,8 @@ import NotificationCard from './NotificationCard';
 
 import {AlchemyContext} from './AlchemyContext';
 
+import {RuleDataService} from './data/RuleDataService';
+import { ToastContainer, toast } from 'react-toastify';
 
 const InteractiveBoard = createReactClass({
 
@@ -18,15 +20,18 @@ const InteractiveBoard = createReactClass({
 	 */
 	propTypes: {
 		data: PropTypes.object,
-		visible: PropTypes.bool,
+		visible: PropTypes.bool
 	},
 
 	/**
 	 * Define the component's default properties pre-data.
 	 * @type {Object}
 	 */
-	defaults: {
-	},
+	getDefaultProps: function() {
+		return {
+			data: {}
+		};
+	  },
 
 	/**
 	 * Define the default component state.
@@ -44,6 +49,7 @@ const InteractiveBoard = createReactClass({
 	 * @return {null} Method doesn't return a value.
 	 */
 	componentDidMount() {
+		
 	},
 
 	/**
@@ -52,6 +58,30 @@ const InteractiveBoard = createReactClass({
 	 */
 	componentWillUnmount() {},
 
+	kickOffRules(){
+		var ruleDataService = new RuleDataService();
+		let rulesPromise = ruleDataService.ReadRules();
+		let thisClass = this;
+
+		if(!thisClass.props.data)
+		{
+			thisClass.props.data = {};
+		}
+		
+		rulesPromise.then(function (result) {
+			thisClass.props.data.rules = [];
+			thisClass.props.data.rules.push(result.data);
+
+			for (var i = 0; i < thisClass.props.data.rules.length; i++) {
+				let ruleSet = thisClass.props.data.rules[i];
+				for (var j = 0; j < ruleSet.length; j++) {
+					toast(ruleSet[j].Name);
+				}
+			}
+
+		});
+	},
+
 	/**
 	 * Render the component to the ReactDOM.
 	 * @return {Object} JSX Expression.
@@ -59,6 +89,8 @@ const InteractiveBoard = createReactClass({
 	render() {
 		if(this.props.visible)
 		{
+			this.kickOffRules();
+
 			return (
 				<div id="interactive-board">
 						<div className={"container"}>

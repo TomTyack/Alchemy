@@ -206,6 +206,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AlcehmyRules\Sitecore.Foundation.AlchemyRules.csproj">
+      <Project>{9dd60379-db15-442f-ace3-73c5e28bde7b}</Project>
+      <Name>Sitecore.Foundation.AlchemyRules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AlchemyBase\Sitecore.Foundation.AlchemyBase.csproj">
       <Project>{9DD60379-DB15-442F-ACE3-73C5E28BDE1B}</Project>
       <Name>Sitecore.Foundation.AlchemyBase</Name>

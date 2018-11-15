@@ -31,7 +31,7 @@ namespace Sitecore.Foundation.Alchemy.ControlPanel.Responses
 
             string content = string.Empty;
 
-			string uiLocationFolder = Settings.GetSetting("Unicorn.DisableFastQueryWarning", "/UI/dist/");
+			string uiLocationFolder = Settings.GetSetting("Alchemy.uiFolderLocation", "/UI/dist/");
                               
             using (StreamReader sr = new StreamReader(VirtualPathProvider.OpenFile($"{uiLocationFolder}index.html")))
 		    {

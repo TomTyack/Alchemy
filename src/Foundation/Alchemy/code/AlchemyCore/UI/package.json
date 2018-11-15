@@ -11,6 +11,7 @@
   "author": "Thomas Tyack",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "create-react-class": "^15.6.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
