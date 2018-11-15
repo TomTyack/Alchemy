@@ -11,7 +11,8 @@ namespace Sitecore.Foundation.Alchemy.Engine
 {
 	public interface IDefaultAlchmeyRuleSet
 	{
-		void Begin();
+	    string Group { get; set; }
+	    void Begin();
 	    List<IAlchemyRule> GetRulesList();
 	}
 }

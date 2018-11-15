@@ -47,6 +47,7 @@
     <Compile Include="AlchemyRule.cs" />
     <Compile Include="ConfigurationRole.cs" />
     <Compile Include="IAlchemyRule.cs" />
+    <Compile Include="IAlchemyRuleIdentifier.cs" />
     <Compile Include="IAlchemyRuleModel.cs" />
     <Compile Include="Importance.cs" />
     <Compile Include="ResponseWrapper\IWebApiResponse.cs" />

@@ -9,7 +9,7 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 	/// </summary>
 	public interface IConfiguration : IContainer
 	{
-		List<IAlchemyRule> AlchemyRules { get; }
+		//List<IAlchemyRule> AlchemyRules { get; }
 
 		/// <summary>
 		/// A description of what this configuration is for. Displayed in control panel if present.
@@ -19,11 +19,11 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 		/// <summary>
 		/// A list of configuration names on which this configuration depends
 		/// </summary>
-		string[] Dependencies { get; }
+		//string[] Dependencies { get; }
 
-		/// <summary>
-		/// A list of configuration names on which this configuration depends
-		/// </summary>
-		string[] IgnoredImplicitDependencies { get; }
+		///// <summary>
+		///// A list of configuration names on which this configuration depends
+		///// </summary>
+		//string[] IgnoredImplicitDependencies { get; }
 	}
 }

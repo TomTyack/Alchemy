@@ -18,12 +18,11 @@ namespace Sitecore.Foundation.Alchemy.Configuration
 			_innerConfiguration = innerConfiguration;
 		}
 
-		public string Name => _innerConfiguration.Name;
-		public List<IAlchemyRule> AlchemyRules => _innerConfiguration.AlchemyRules;
+		public string Name => _innerConfiguration.Name;                            
 		public string Description => _innerConfiguration.Description;
 		public string Extends => _innerConfiguration.Extends;
-		public string[] Dependencies => _innerConfiguration.Dependencies;
-		public string[] IgnoredImplicitDependencies => _innerConfiguration.IgnoredImplicitDependencies;
+		//public string[] Dependencies => _innerConfiguration.Dependencies;
+		//public string[] IgnoredImplicitDependencies => _innerConfiguration.IgnoredImplicitDependencies;
 
 		public T Resolve<T>() where T : class
 		{

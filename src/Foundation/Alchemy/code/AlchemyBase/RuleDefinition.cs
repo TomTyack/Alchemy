@@ -16,6 +16,7 @@ namespace Sitecore.Foundation.AlchemyBase
 
         public XmlNode Definition { get; set; }
 
+        public Guid Id { get; set; }
         public string Name { get { return GetStringValue("name"); } set {  }}
                                                                    
         public Status Status { get { return ParseEnum<Status>("Status", Status.Waiting); } set {} }

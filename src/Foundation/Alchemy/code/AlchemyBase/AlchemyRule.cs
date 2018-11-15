@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sitecore.Foundation.AlchemyBase
@@ -14,6 +15,7 @@ namespace Sitecore.Foundation.AlchemyBase
 
 
 	    public string Name { get; set; }
+	    public Guid Id { get; set; }
 
         public string ErrorMessage { get; set; }
 		public string FailureReason { get; set; }
@@ -40,6 +42,7 @@ namespace Sitecore.Foundation.AlchemyBase
 
 	    public void Inject(RuleDefinition definition)
 	    {
+	        this.Id = Guid.NewGuid();
 	        this.Name = definition.Name;
 	        this.CompletionStatus = definition.CompletionStatus;
 	        this.ConfigurationRole = definition.ConfigurationRole;

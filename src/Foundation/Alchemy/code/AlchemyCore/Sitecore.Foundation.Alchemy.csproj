@@ -168,6 +168,8 @@
     <Compile Include="Pipelines\ExpandConfigurationVariables\ExpandConfigurationVariablesPipelineArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FoundryVersion.cs" />
+    <Compile Include="Repository\AlchemyRuleRepository.cs" />
+    <Compile Include="Repository\IAlchemyRuleRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\Alchemy\Alchemy.config">

@@ -69,13 +69,23 @@ const InteractiveBoard = createReactClass({
 		}
 		
 		rulesPromise.then(function (result) {
-			thisClass.props.data.rules = [];
-			thisClass.props.data.rules.push(result.data);
+			thisClass.props.data.ruleSet = [];
+			thisClass.props.data.ruleSet.push(result.data);
 
-			for (var i = 0; i < thisClass.props.data.rules.length; i++) {
-				let ruleSet = thisClass.props.data.rules[i];
-				for (var j = 0; j < ruleSet.length; j++) {
-					toast(ruleSet[j].Name);
+			for (let i = 0; i<thisClass.props.data.ruleSet.length; i++) {
+				let ruleSet = thisClass.props.data.ruleSet[i];
+				for (let j = 0; j<ruleSet.length; j++) {
+					let whoKnows = ruleSet[j];	
+					
+					for (let key in whoKnows) {
+						if (whoKnows.hasOwnProperty(key)) {
+							//console.log(key + ": " + whoKnows[key]);
+							toast(whoKnows[key].Name);
+						  }
+						
+					}
+					
+					//toast(ruleSet[j].Name);
 				}
 			}
 

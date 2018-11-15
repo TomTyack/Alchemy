@@ -13,10 +13,14 @@ namespace Sitecore.Foundation.Alchemy.Engine
 {
 	public class RuleEngine : IDefaultAlchmeyRuleSet
     {
-		protected readonly List<IAlchemyRule> AlchemyRules = new List<IAlchemyRule>();
+        public string Group { get; set; }
+
+        protected List<IAlchemyRule> AlchemyRules = new List<IAlchemyRule>();
 
 		public RuleEngine(XmlNode configNode)
 		{
+		    if (AlchemyRules.Any())
+		        return;
 			Assert.ArgumentNotNull(configNode, "configNode");
             var rules = configNode.ChildNodes;
 

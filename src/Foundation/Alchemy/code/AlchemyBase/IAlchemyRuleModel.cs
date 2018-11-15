@@ -4,10 +4,8 @@ using Newtonsoft.Json.Converters;
 
 namespace Sitecore.Foundation.AlchemyBase
 {
-	public interface IAlchemyRuleModel
+    public interface IAlchemyRuleModel : IAlchemyRuleIdentifier
     {
-        string Name { get; set; }
-
 	    [JsonConverter(typeof(StringEnumConverter))]
 		Status Status { get; set; }
 
