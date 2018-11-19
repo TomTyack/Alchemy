@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sitecore.Foundation.AlchemyBase
 {
@@ -38,7 +39,7 @@ namespace Sitecore.Foundation.AlchemyBase
 
         public bool IsProductionCDServer { get; set; }
 
-	    public abstract void Run();
+	    public abstract Task Run();
 
 	    public void Inject(RuleDefinition definition)
 	    {
@@ -79,13 +80,15 @@ namespace Sitecore.Foundation.AlchemyBase
 		protected void Errored()
 		{
 			CompletionStatus = CompletionStatus.Error;
+		    Status = Status.Completed;
 			ErrorMessage = DefaultErrorMessage;
 		}
 
 		protected void Failed()
 		{
 			CompletionStatus = CompletionStatus.Fail;
-			this.FailureReason = string.Format(DefaultFailureMessage, Site);
+		    Status = Status.Completed;
+            this.FailureReason = string.Format(DefaultFailureMessage, Site);
 		}
 	}
 }

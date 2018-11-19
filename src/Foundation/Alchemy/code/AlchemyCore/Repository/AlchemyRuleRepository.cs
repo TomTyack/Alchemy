@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using Sitecore.Foundation.Alchemy.Configuration;
 using Sitecore.Foundation.Alchemy.Engine;
+using Sitecore.Foundation.AlchemyBase;
 
 namespace Sitecore.Foundation.Alchemy.Repository
 {
@@ -35,5 +37,17 @@ namespace Sitecore.Foundation.Alchemy.Repository
 			var responses = _ruleEngines.Select(x => x.GetRulesList().Select(y => new { Id = y.Id, Name = y.Name, Group = x.Group, Status = y.Status.ToString() })).ToList();
 		    return responses;
 	    }
-	}
+
+	    public IAlchemyRule GetRule(string id)
+	    {
+		    return _ruleEngines.SelectMany(x => x.GetRulesList()).FirstOrDefault(x => x.Id == Guid.Parse(id));
+		}
+
+	    public async Task BeginProcessing(string id)
+	    {
+	        var rule = GetRule(id);
+            if(rule.Status == Status.Waiting)
+                await rule.Run();
+	    }
+    }
 }

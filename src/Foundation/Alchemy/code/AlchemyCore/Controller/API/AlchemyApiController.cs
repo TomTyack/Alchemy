@@ -24,13 +24,13 @@ namespace Sitecore.Foundation.Alchemy.Controller.API
 
         [HttpGet]
         //[BasicAuthentication("User", "ssLK")]
-        [Route("alchemy/api/rules/run/")]
-        public HttpResponseMessage RunRulesEngine([FromUri] string ruleID)
-        {
-	        //_ruleEngine.Begin();
+        [Route("alchemy/api/rules/run/{ruleId}/")]
+        public HttpResponseMessage RunRulesEngine([FromUri] string ruleId)
+        {                           
+            AlchemyConfigurationManager.AlchemyRuleRepository.BeginProcessing(ruleId);
 
             return Request.CreateResponse(HttpStatusCode.OK,
-                new WebApiResponse("NotAvailable", "The class did not have an introduction text."));
+                new WebApiResponse<bool>(true));
         }
 
         [HttpGet]

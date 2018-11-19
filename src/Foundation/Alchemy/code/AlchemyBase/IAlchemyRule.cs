@@ -1,4 +1,6 @@
-﻿namespace Sitecore.Foundation.AlchemyBase
+﻿using System.Threading.Tasks;
+
+namespace Sitecore.Foundation.AlchemyBase
 {
     public interface IAlchemyRule : IAlchemyRuleModel
     {
@@ -6,5 +8,7 @@
         string FailureReason { get; set; }
 
         void Inject(RuleDefinition ruleDefinition);
+
+        Task Run();
     }
 }
