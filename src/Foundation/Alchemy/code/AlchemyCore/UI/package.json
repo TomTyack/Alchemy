@@ -13,9 +13,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "create-react-class": "^15.6.3",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-animation-components": "^3.0.0",
+    "react-dom": "^16.6.3",
     "react-toastify": "^4.4.0",
+    "react-transition-group": "^2.5.0",
     "reactstrap": "^6.5.0"
   },
   "devDependencies": {

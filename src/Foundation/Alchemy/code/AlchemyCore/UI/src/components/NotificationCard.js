@@ -6,7 +6,6 @@ const createReactClass = require('create-react-class');
 const PropTypes = require('prop-types');
 
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const NotificationCard = createReactClass({
 
@@ -72,10 +71,6 @@ const NotificationCard = createReactClass({
 		{
 			result = (
 				<div className="alchemy-card">
-
-					<button onClick={this.notify}>Notify !</button>
-          			<ToastContainer />
-
 				</div>
 				);
 		}

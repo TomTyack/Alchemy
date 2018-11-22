@@ -10,7 +10,9 @@ import NotificationCard from './NotificationCard';
 import {AlchemyContext} from './AlchemyContext';
 
 import {RuleDataService} from './data/RuleDataService';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Fade, Stagger } from 'react-animation-components'
 
 const InteractiveBoard = createReactClass({
 
@@ -29,7 +31,8 @@ const InteractiveBoard = createReactClass({
 	 */
 	getDefaultProps: function() {
 		return {
-			data: {}
+			data: {},
+			rulesLoaded: false
 		};
 	  },
 
@@ -40,7 +43,8 @@ const InteractiveBoard = createReactClass({
 	getInitialState() {
 		return {
 			visible: false,
-			active: false
+			active: false,
+			rules: []
 		};
 	},
 
@@ -59,6 +63,10 @@ const InteractiveBoard = createReactClass({
 	componentWillUnmount() {},
 
 	kickOffRules(){
+
+		// if(this.props.data.rulesLoaded)
+		// 	return;
+
 		var ruleDataService = new RuleDataService();
 		let rulesPromise = ruleDataService.ReadRules();
 		let thisClass = this;
@@ -69,28 +77,145 @@ const InteractiveBoard = createReactClass({
 		}
 		
 		rulesPromise.then(function (result) {
-			thisClass.props.data.ruleSet = [];
-			thisClass.props.data.ruleSet.push(result.data);
+			thisClass.beginRuleProcessing(result);
+			thisClass.props.data.rulesLoaded = true;
+		});
 
-			for (let i = 0; i<thisClass.props.data.ruleSet.length; i++) {
-				let ruleSet = thisClass.props.data.ruleSet[i];
-				for (let j = 0; j<ruleSet.length; j++) {
-					let whoKnows = ruleSet[j];	
-					
-					for (let key in whoKnows) {
-						if (whoKnows.hasOwnProperty(key)) {
-							//console.log(key + ": " + whoKnows[key]);
-							toast(whoKnows[key].Name);
-						  }
-						
+		let delayInMilliseconds = 5000; //1 second
+
+		setTimeout(function() {
+			thisClass.props.data.rules.forEach(thisRule => {
+				thisClass.triggerToast(thisRule);
+			});
+		}, delayInMilliseconds);
+
+		
+	},
+
+	beginRuleProcessing(result){
+
+		let thisClass = this;
+
+		thisClass.props.data.ruleSet = [];
+		thisClass.props.data.rules = [];
+		thisClass.props.data.ruleSet.push(result.data);
+
+		for (let i = 0; i<thisClass.props.data.ruleSet.length; i++) {
+			let ruleSet = thisClass.props.data.ruleSet[i];
+			for (let j = 0; j<ruleSet.length; j++) {
+				let whoKnows = ruleSet[j];	
+				for (let key in whoKnows) {
+										
+					if (whoKnows.hasOwnProperty(key)) {
+						let thisRule = whoKnows[key];
+						thisRule.key = thisRule.UniqueId;
+						thisClass.props.data.rules.push(thisRule);
+						//thisClass.triggerToast(thisRule);
 					}
-					
-					//toast(ruleSet[j].Name);
 				}
 			}
-
-		});
+		}
 	},
+
+	wait(ms){
+		let start = new Date().getTime();
+		let end = start;
+		while(end < start + ms) {
+		  end = new Date().getTime();
+	   }
+	 },
+
+	triggerToast(rule){
+		let thisClass = this;
+		const options = {
+			toastId: rule.UniqueId,
+			//onOpen: props => console.log(props.foo),
+			onClose: props => thisClass.initialToastClosed(rule),
+			// autoClose: 6000,
+			// closeButton: <FontAwesomeCloseButton />,
+			// type: toast.TYPE.INFO,
+			// hideProgressBar: false,
+			// position: toast.POSITION.TOP_LEFT,
+			// pauseOnHover: true,
+			// transition: MyCustomTransition,
+			// and so on ...
+		};
+
+		const Msg = ({ closeToast }) => (
+			<div>			
+				<div className="micro">
+				Starting: 
+			</div>
+			<div>
+				{rule.Name}
+			</div>
+		  </div>
+		  )
+		  //this.wait(2000);
+		  //toast(<Msg />, options);
+		toast(rule.Name);	
+		toast("Custom Style Notification with css class!", {
+			position: toast.POSITION.BOTTOM_RIGHT,
+			className: 'foo-bar'
+		  });	
+	},
+
+	initialToastClosed(rule){
+		let thisClass = this;
+		thisClass.addRule(rule);
+	},
+
+	renderRules(){	
+		//const items = [rule.Name, 'second', 'third', 'fourth', 'fifth'];
+		let stagger = (
+			this.state.rules.map(
+				item => (
+					<Stagger in>
+						<Fade>
+							<div>Each {item.Name} will transition in with an incrementally larger delay than the previous</div>
+						</Fade>
+					</Stagger>
+				)
+			)
+		);
+		return stagger;
+	},
+
+	addRule(rule) {
+
+		  this.setState((prevState) => {
+			return { 
+			  rules: prevState.rules.concat(rule) 
+			};
+		  });
+		 		 
+		 console.log(this.state.rules);
+	  },
+
+	  notify() {
+		toast("Default Notification !");
+  
+		toast.success("Success Notification !", {
+		  position: toast.POSITION.TOP_CENTER
+		});
+  
+		toast.error("Error Notification !", {
+		  position: toast.POSITION.TOP_LEFT
+		});
+  
+		toast.warn("Warning Notification !", {
+		  position: toast.POSITION.BOTTOM_LEFT
+		});
+  
+		toast.info("Info Notification !", {
+		  position: toast.POSITION.BOTTOM_CENTER
+		});
+  
+		toast("Custom Style Notification with css class!", {
+		  position: toast.POSITION.BOTTOM_RIGHT,
+		  className: 'foo-bar'
+		});
+	  },
 
 	/**
 	 * Render the component to the ReactDOM.
@@ -102,10 +227,27 @@ const InteractiveBoard = createReactClass({
 			this.kickOffRules();
 
 			return (
-				<div id="interactive-board">
+				<div>
+					<div className="overlay">
+						{this.renderRules()}
+					</div>
+					<div id="interactive-board">
 						<div className={"container"}>
 							<NotificationCard visible={true} />
+							<ToastContainer
+position="top-right"
+autoClose={4998}
+hideProgressBar={false}
+newestOnTop
+closeOnClick
+rtl={false}
+pauseOnVisibilityChange
+draggable
+pauseOnHover
+/>
+							<button onClick={this.notify}>Notify</button>
 						</div>					
+					</div>
 				</div>
 				);
 		}

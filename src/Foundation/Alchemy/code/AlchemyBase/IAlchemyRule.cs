@@ -9,6 +9,8 @@ namespace Sitecore.Foundation.AlchemyBase
 
         void Inject(RuleDefinition ruleDefinition);
 
-        Task Run();
-    }
+        void Run();
+
+	    Task RunAsync();
+	}
 }

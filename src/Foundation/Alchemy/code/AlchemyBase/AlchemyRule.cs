@@ -15,7 +15,8 @@ namespace Sitecore.Foundation.AlchemyBase
 		}
 
 
-	    public string Name { get; set; }
+		public string UniqueId { get; set; }
+		public string Name { get; set; }
 	    public Guid Id { get; set; }
 
         public string ErrorMessage { get; set; }
@@ -39,11 +40,19 @@ namespace Sitecore.Foundation.AlchemyBase
 
         public bool IsProductionCDServer { get; set; }
 
-	    public abstract Task Run();
+	    public abstract void Run();
 
-	    public void Inject(RuleDefinition definition)
+		public async Task RunAsync()
+		{
+			await Task.Run(() => {
+				Run();
+			});
+		}
+
+		public void Inject(RuleDefinition definition)
 	    {
-	        this.Id = Guid.NewGuid();
+		    this.Id = Guid.NewGuid();
+		    this.UniqueId = definition.UniqueId;
 	        this.Name = definition.Name;
 	        this.CompletionStatus = definition.CompletionStatus;
 	        this.ConfigurationRole = definition.ConfigurationRole;
