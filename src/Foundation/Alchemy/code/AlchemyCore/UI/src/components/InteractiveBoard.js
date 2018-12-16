@@ -79,18 +79,35 @@ const InteractiveBoard = createReactClass({
 		rulesPromise.then(function (result) {
 			thisClass.beginRuleProcessing(result);
 			thisClass.props.data.rulesLoaded = true;
+			thisClass.triggerIncrementally(thisClass.props.data.rules.length, null);
 		});
 
 		let delayInMilliseconds = 5000; //1 second
 
-		setTimeout(function() {
-			thisClass.props.data.rules.forEach(thisRule => {
-				thisClass.triggerToast(thisRule);
-			});
-		}, delayInMilliseconds);
-
+		// setTimeout(function() {
+		// 	thisClass.props.data.rules.forEach(thisRule => {
+		// 		setTimeout(function () {
+		// 			thisClass.triggerToast(thisRule);
+		// 		}, 3000);
+				
+		// 	});
+		// }, delayInMilliseconds);
 		
-	},
+		
+	}, triggerIncrementally : function theLoop (i, aClass) {
+		let thisClass = this;
+		if(!thisClass)
+			thisClass = aClass;
+		setTimeout(function () {
+		  //alert("Cheese!");
+		  
+		  thisClass.triggerToast(thisClass.props.data.rules[i-1]);
+		  // DO SOMETHING WITH data AND stuff
+		  if (--i) {                  // If i > 0, keep going
+			theLoop(i, thisClass);  // Call the loop again
+		  }
+		}, 3000);
+	  },
 
 	beginRuleProcessing(result){
 
@@ -151,13 +168,14 @@ const InteractiveBoard = createReactClass({
 			</div>
 		  </div>
 		  )
-		  //this.wait(2000);
+		//   this.wait(20000);
 		  //toast(<Msg />, options);
-		toast(rule.Name);	
-		toast("Custom Style Notification with css class!", {
-			position: toast.POSITION.BOTTOM_RIGHT,
-			className: 'foo-bar'
-		  });	
+		  toast(rule.Name);	
+		  		
+		// toast("Custom Style Notification with css class!", {
+		// 	position: toast.POSITION.BOTTOM_RIGHT,
+		// 	className: 'foo-bar'
+		//   });	
 	},
 
 	initialToastClosed(rule){
