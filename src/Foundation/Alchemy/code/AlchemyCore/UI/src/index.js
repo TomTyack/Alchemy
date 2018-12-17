@@ -6,9 +6,11 @@ import Header from './components/Header'
 import Loader from './components/Loader'
 import GoButton from './components/GoButton'
 import ProgressBar from './components/ProgressBar'
-import InteractiveBoard from './components/InteractiveBoard'
-
+import {RuleDataService} from './components/data/RuleDataService';
+import PropTypes from 'prop-types'
 import {AlchemyContext} from './components/AlchemyContext';
+import {RulesToasterAlerts} from './components/RulesToasterAlerts';
+
 
 class AlchemyApp extends React.Component {
 
@@ -25,7 +27,6 @@ class AlchemyApp extends React.Component {
         };
       }
 
-
       /*
       * Register global broadcast function that nested components can use to change global state.
       */
@@ -36,11 +37,21 @@ class AlchemyApp extends React.Component {
               }));
           };
           this.startScanning = () => {
-            console.log("toggle scanning " );
+            console.log("start scanning");
+            var ruleDataService = new RuleDataService();
+
             this.setState(state => ({
                 scanning: true,
                 waiting: false
-              }));
+            }));
+
+            let rulesPromise = ruleDataService.beginProcessingRules();
+            
+            rulesPromise.then(function (result) {
+                this.props.data = result;
+                //thisClass.triggerIncrementally(thisClass.props.data.rules.length, null);
+            });
+
           };
 
           // The waiting state, show the Go button ready to go
@@ -67,13 +78,23 @@ class AlchemyApp extends React.Component {
                     <GoButton id="goBtn" visible={true} />
 
                     <ProgressBar id="progressBar" visible={false} />
+                    
+                    <RulesToasterAlerts id="rulesToaster" visible={this.scanning} />
 
-                    <InteractiveBoard id="InteractiveBoard" visible={this.state.scanning} />
                 </div>
             </div>
         </AlchemyContext.Provider>);
     }
 }
+
+AlchemyApp.propTypes = {
+    data: PropTypes.object
+};
+
+AlchemyApp.defaultProps = {
+    data: {},
+    rulesLoaded: false
+};
 
 let App = document.getElementById("app");
 
