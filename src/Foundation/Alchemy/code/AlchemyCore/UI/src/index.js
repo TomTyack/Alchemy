@@ -9,7 +9,9 @@ import ProgressBar from './components/ProgressBar'
 import {RuleDataService} from './components/data/RuleDataService';
 import PropTypes from 'prop-types'
 import {AlchemyContext} from './components/AlchemyContext';
-import {RulesToasterAlerts} from './components/RulesToasterAlerts';
+import RulesToasterAlerts from './components/RulesToasterAlerts';
+
+import RulesListing from './components/dashboard/RulesListing';
 
 
 class AlchemyApp extends React.Component {
@@ -20,9 +22,10 @@ class AlchemyApp extends React.Component {
         this.state = {
             loading: true, 
             waiting: false,
+            scanning: false,
+            scanningCommenced: false,
             toggleWaiting : this.toggleWaiting,
             toggleLoading : this.toggleLoading,
-            scanning: false,
             startScanning : this.startScanning,
         };
       }
@@ -31,6 +34,9 @@ class AlchemyApp extends React.Component {
       * Register global broadcast function that nested components can use to change global state.
       */
       registerEvents() {
+
+        let thisClass = this;
+
         this.toggleLoading = (val) => {
             this.setState(state => ({
                 loading: val
@@ -42,16 +48,20 @@ class AlchemyApp extends React.Component {
 
             this.setState(state => ({
                 scanning: true,
-                waiting: false
+                waiting: true
             }));
 
             let rulesPromise = ruleDataService.beginProcessingRules();
             
             rulesPromise.then(function (result) {
-                this.props.data = result;
-                //thisClass.triggerIncrementally(thisClass.props.data.rules.length, null);
+                thisClass.props.data.rules = result;
+                thisClass.setState(state => ({
+                    scanning: true,
+                    waiting: false,
+                    scanningCommenced: true
+                }));
+                ruleDataService.beginPollingRunningRules();
             });
-
           };
 
           // The waiting state, show the Go button ready to go
@@ -79,7 +89,9 @@ class AlchemyApp extends React.Component {
 
                     <ProgressBar id="progressBar" visible={false} />
                     
-                    <RulesToasterAlerts id="rulesToaster" visible={this.scanning} />
+                    <RulesToasterAlerts id="rulesToaster" visible={this.state.scanning} data={this.props.data} />
+
+                    <RulesListing id="rulesListing" visible={this.state.scanningCommenced} data={this.props.data} />
 
                 </div>
             </div>
@@ -92,7 +104,10 @@ AlchemyApp.propTypes = {
 };
 
 AlchemyApp.defaultProps = {
-    data: {},
+    data: {
+        rules: {},
+        rulesCompleted : {}
+    },
     rulesLoaded: false
 };
 

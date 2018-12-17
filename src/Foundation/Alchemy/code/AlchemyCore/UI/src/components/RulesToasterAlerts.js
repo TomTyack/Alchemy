@@ -25,7 +25,8 @@ const RulesToasterAlerts = createReactClass({
 	 */
 	getDefaultProps: function() {
 		return {
-            data: {}
+            data: {},
+            visible: false
 		};
 	},
 
@@ -35,7 +36,6 @@ const RulesToasterAlerts = createReactClass({
 	 */
 	getInitialState() {
 		return {
-			visible: false,
 			rules: []
 		};
 	},
@@ -64,13 +64,11 @@ const RulesToasterAlerts = createReactClass({
 		if(!thisClass)
 			thisClass = aClass;
 		setTimeout(function () {
-		  
-		  thisClass.triggerToast(thisClass.props.data.rules[i-1]);
-		  // DO SOMETHING WITH data AND stuff
-		  if (--i) {                  // If i > 0, keep going
-			theLoop(i, thisClass);  // Call the loop again
-		  }
-		}, 3000);
+            thisClass.triggerToast(thisClass.props.data.rules[i-1]);
+            if (--i) {                  // If i > 0, keep going
+                theLoop(i, thisClass);  // Call the loop again
+            }
+		}, 1500);
 	  },
 
 	triggerToast(rule){
@@ -114,26 +112,29 @@ const RulesToasterAlerts = createReactClass({
 	render() {
 		if(this.props.visible)
 		{
-			this.kickOffRules();
-			return (
-				<div>
-					<div id="interactive-board">
-						<div className={"container"}>
-							<ToastContainer
-                                position="top-right"
-                                autoClose={4998}
-                                hideProgressBar={false}
-                                newestOnTop
-                                closeOnClick
-                                rtl={false}
-                                pauseOnVisibilityChange
-                                draggable
-                                pauseOnHover
-                            />
-						</div>					
-					</div>
-				</div>
-				);
+            if(this.props.data.rules && this.props.data.rules.length > 0)
+            {
+                this.kickOffRules();
+                return (
+                    <div>
+                        <div id="interactive-board">
+                            <div className={"container"}>
+                                <ToastContainer
+                                    position="top-right"
+                                    autoClose={4998}
+                                    hideProgressBar={false}
+                                    newestOnTop
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnVisibilityChange
+                                    draggable
+                                    pauseOnHover
+                                />
+                            </div>					
+                        </div>
+                    </div>
+                    );
+            }
 		}
 		return (null);		
 	}

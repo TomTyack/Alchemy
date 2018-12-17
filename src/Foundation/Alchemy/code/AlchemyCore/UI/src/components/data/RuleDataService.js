@@ -4,10 +4,25 @@ import axios from 'axios';
 export class RuleDataService  {
 
     constructor() {
+        this.rulesStarted = [];
+        this.rulesCompleted = []; // Contains all rules finished processing, success or failure
+        this.rulesFailed = [];
+        this.rulesSucceeded = [];
+    }
+
+    ENDPOINTURL() {
+        return "http://sc827/";
     }
 
     ReadRules() {
-        const request = axios.get(`http://sc827/alchemy/api/rules/ruleslist/`);
+        const request = axios.get(this.ENDPOINTURL()+ `alchemy/api/rules/ruleslist/`);
+        return request.then(res => {
+            return res;
+        });
+    }
+
+    ReadRule(ruleID) {
+        const request = axios.get(this.ENDPOINTURL()+ `alchemy/api/rules/run/` + ruleID);
         return request.then(res => {
             return res;
         });
@@ -35,10 +50,8 @@ export class RuleDataService  {
 		ruleSet.push(result.data);
 
 		for (let i = 0; i< ruleSet.length; i++) {
-            console.log(ruleSet);
             if(ruleSet)
             {
-                console.log(typeof ruleSet)
                 let rulesStop = ruleSet[i];
                 for (let j = 0; j<rulesStop.length; j++) {
                     let whoKnows = rulesStop[j];
@@ -53,6 +66,77 @@ export class RuleDataService  {
                 }
             }			
         }
+        this.rulesStarted = rules;
         return rules;
-	}
+    }
+    
+    /**
+     * Kicks off a polling event to check for rules waiting from completion
+     * @param {*} data 
+     */
+    beginPollingRunningRules(aClass)
+    {
+        let thisClass = this;
+        if(aClass)
+            thisClass = aClass;
+        setTimeout(function () {
+            if(thisClass.rulesStarted.length != 0)
+            {
+                thisClass.verifyRulesWaitingCompletion(thisClass);
+                thisClass.beginPollingRunningRules(thisClass);
+            }
+        }, 5000);
+    }
+
+    /**
+     * Verify that the a particular rule is still running
+     * @param {*} data 
+     */    
+    verifyRulesWaitingCompletion(thisClass)
+    {
+        for (var i = 0; i < thisClass.rulesStarted.length; i++){
+            var obj = thisClass.rulesStarted[i];
+            for (var key in obj){
+                var attrName = key;
+                var attrValue = obj[key];
+                thisClass.VerifyRulesStatus(obj, thisClass);
+            }
+        }
+    }
+
+    /**
+     * Given a rule call the API and verify if the rules has completed processing.
+     * @param {*} rule 
+     */
+    VerifyRulesStatus(originalRules, thisClass){
+        let rulesPromise = thisClass.ReadRule(originalRules.Id);
+        
+        rulesPromise.then(function (rule) {
+
+            let match = thisClass.rulesStarted.find((element) => {
+                return element.Id === originalRules.Id;
+            });
+
+            if(match && rule.data)
+            {
+                var index = thisClass.rulesStarted.map(x => {
+                    return x.Id;
+                }).indexOf(originalRules.Id);
+                
+                thisClass.rulesStarted.splice(index, 1);
+
+                thisClass.rulesCompleted.push(match);
+                if(rule.data.Success)
+                {
+
+                    thisClass.rulesSucceeded.push(match);
+                }else if (rule.data && !rule.data.Success)
+                {
+                    thisClass.rulesSucceeded.push(match);
+                }
+            }
+            
+            
+        });
+    }
 }
