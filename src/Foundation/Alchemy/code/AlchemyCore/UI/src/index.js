@@ -43,26 +43,18 @@ class AlchemyApp extends React.Component {
               }));
           };
           this.startScanning = () => {
-            console.log("start scanning");
-            var ruleDataService = new RuleDataService();
-
             this.setState(state => ({
                 scanning: true,
                 waiting: true
             }));
+            this.handleScanningData(thisClass);
+          }
 
-            let rulesPromise = ruleDataService.beginProcessingRules();
-            
-            rulesPromise.then(function (result) {
-                thisClass.props.data.rules = result;
-                thisClass.setState(state => ({
-                    scanning: true,
-                    waiting: false,
-                    scanningCommenced: true
-                }));
-                ruleDataService.beginPollingRunningRules();
-            });
-          };
+          this.updateListing = () => {
+            this.setState(state => ({
+                scanning: true
+            }));
+          }
 
           // The waiting state, show the Go button ready to go
           this.toggleWaiting = (val) => {
@@ -70,7 +62,27 @@ class AlchemyApp extends React.Component {
                 waiting: val
               }));
           };
-    }  
+    }
+
+    /**
+     *  Once scanning has commenced, create the dataService and being rule processing.
+     */
+    handleScanningData(thisClass)
+    {
+        var ruleDataService = new RuleDataService();
+        ruleDataService.SetEvents(thisClass.updateListing);
+        thisClass.props.data.rulesService = ruleDataService;
+        let rulesPromise = ruleDataService.beginProcessingRules();
+        
+        rulesPromise.then(function (result) {
+            thisClass.setState(state => ({
+                scanning: true,
+                waiting: false,
+                scanningCommenced: true
+            }));
+            ruleDataService.beginPollingRunningRules();
+        });
+    }
 
     render() {
         return (
@@ -81,7 +93,7 @@ class AlchemyApp extends React.Component {
                 <div>                    
                     <AlchemyContext.Consumer>
                         {({toggleLoading, toggleWaiting}) => (
-                            <Loader id="mainLoader" toggleLoading={toggleLoading} toggleWaiting={this.toggleWaiting}/>
+                            <Loader id="mainLoader" toggleLoading={toggleLoading} toggleWaiting={toggleWaiting}/>
                         )}
                     </AlchemyContext.Consumer>
                     
@@ -89,9 +101,9 @@ class AlchemyApp extends React.Component {
 
                     <ProgressBar id="progressBar" visible={false} />
                     
-                    <RulesToasterAlerts id="rulesToaster" visible={this.state.scanning} data={this.props.data} />
+                    <RulesToasterAlerts id="rulesToaster" visible={this.state.scanning} dataService={this.props.data.rulesService} />
 
-                    <RulesListing id="rulesListing" visible={this.state.scanningCommenced} data={this.props.data} />
+                    <RulesListing id="rulesListing" visible={this.state.scanningCommenced} dataService={this.props.data.rulesService} />
 
                 </div>
             </div>
@@ -104,10 +116,7 @@ AlchemyApp.propTypes = {
 };
 
 AlchemyApp.defaultProps = {
-    data: {
-        rules: {},
-        rulesCompleted : {}
-    },
+    data: {},
     rulesLoaded: false
 };
 

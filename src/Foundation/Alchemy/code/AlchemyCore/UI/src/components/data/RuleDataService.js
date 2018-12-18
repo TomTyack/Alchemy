@@ -5,13 +5,20 @@ export class RuleDataService  {
 
     constructor() {
         this.rulesStarted = [];
+        
+        
+        this.ruleAlertsPending = [];// Used to show new toast alerts
+        this.dashboardPending = []; // Used to show dashboard information blocks for completed rules
+
         this.rulesCompleted = []; // Contains all rules finished processing, success or failure
         this.rulesFailed = [];
         this.rulesSucceeded = [];
+
+        this.updateRuleListing = null;
     }
 
     ENDPOINTURL() {
-        return "http://sc827/";
+        return "http://fitnessfirst.dev.local/";
     }
 
     ReadRules() {
@@ -35,8 +42,8 @@ export class RuleDataService  {
         
         var promise = new Promise(function(resolve, reject) {
             rulesPromise.then(function (result) {
-                let rules = thisClass.formatRulesData(result);
-                resolve(rules);
+                thisClass.formatRulesData(result);
+                resolve(true);
             });
         });
 
@@ -66,8 +73,10 @@ export class RuleDataService  {
                 }
             }			
         }
-        this.rulesStarted = rules;
-        return rules;
+        this.rulesStarted = [];
+        this.rulesStarted =  rules.slice(0);
+        this.ruleAlertsPending = [];
+        this.ruleAlertsPending = rules.slice(0); // track these to show the initial alerts
     }
     
     /**
@@ -96,11 +105,7 @@ export class RuleDataService  {
     {
         for (var i = 0; i < thisClass.rulesStarted.length; i++){
             var obj = thisClass.rulesStarted[i];
-            for (var key in obj){
-                var attrName = key;
-                var attrValue = obj[key];
-                thisClass.VerifyRulesStatus(obj, thisClass);
-            }
+            thisClass.VerifyRulesStatus(obj, thisClass);
         }
     }
 
@@ -126,17 +131,20 @@ export class RuleDataService  {
                 thisClass.rulesStarted.splice(index, 1);
 
                 thisClass.rulesCompleted.push(match);
+                thisClass.dashboardPending.push(match);
                 if(rule.data.Success)
                 {
-
                     thisClass.rulesSucceeded.push(match);
                 }else if (rule.data && !rule.data.Success)
                 {
                     thisClass.rulesSucceeded.push(match);
                 }
+                thisClass.updateRuleListing();
             }
-            
-            
         });
+    }
+
+    SetEvents(updateRuleListing){
+        this.updateRuleListing = updateRuleListing;
     }
 }
