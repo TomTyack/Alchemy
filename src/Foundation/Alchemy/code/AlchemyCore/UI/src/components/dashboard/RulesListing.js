@@ -1,24 +1,45 @@
 // Base React modules.
+
+import './../../scss/dashboard.scss'
+import 'react-circular-progressbar/dist/styles.css';
+
 const React = require('react');
 const createReactClass = require('create-react-class');
 const PropTypes = require('prop-types');
-const { PoseGroup, posed } = require('react-pose');
+import posed, { PoseGroup } from "react-pose";
+import CircularProgressbar from 'react-circular-progressbar';
 
 
-const ItemList = ({ items }) => (
-	<ul>
-	  <PoseGroup>
-		{items.map(item => <StyledItem key={item.Id}>{item.Name}</StyledItem>)}
-	  </PoseGroup>
-	</ul>
-);
+const Rule = posed.div({
+	enter: { opacity: 1 },
+	exit: { opacity: 0 }
+  })
+
+// const ItemList = ({ items }) => (
+// 	<ul className="rules-list">
+// 	  <PoseGroup>
+// 		{
+// 		items.map(function(item, i){
+// 			let successClass = item.Success ? "success" : "failure";
+// 			let itemClassName = "rule-block " + successClass;
+// 			return (<Rule className={itemClassName} key={item.Id}>
+// 						<div className="name">{item.Name}</div>
+// 						<div className="progress"><CircularProgressBar strokeWidth="10"
+//               				sqSize="200"
+//               				percentage="100"  /></div>
+// 					</Rule>
+// 				);
+// 		})}
+// 	  </PoseGroup>
+// 	</ul>
+// );
 
 const RulesListing = createReactClass({
 
 	// state = {
 	// 	rules: this.props.initialX
 	// },
-
+	
 	/**
 	 * Define the default component state.
 	 * @return {Object} The default `this.state` object.
@@ -54,12 +75,15 @@ const RulesListing = createReactClass({
 			// Construct an array with all pending items
 			let pendingArray = this.props.dataService.dashboardPending.slice(0);
 
-			if(this.state.pendingArray)
-				pendingArray.push(this.state.pendingArray); // Add existing items already in the state
+			if(this.props.data.pendingArray)
+			pendingArray = pendingArray.concat(this.props.data.pendingArray)
+				//pendingArray.push(this.props.data.pendingArray); // Add existing items already in the state
+
+			this.props.data.pendingArray = pendingArray.slice(0);
 
 			this.props.dataService.dashboardPending = [];
 			this.setState({
-				rules: pendingArray
+				rules: this.props.data.pendingArray
 			});
 		}
 	},
@@ -87,6 +111,30 @@ const RulesListing = createReactClass({
 		// 		});
 		// 	  }, 6000);
 		// }
+		this.reRenderPercentages();
+	},
+
+	reRenderPercentages(aClass){
+		let thisClass = this;
+		if(aClass)
+			thisClass = aClass;
+		setTimeout(() => {
+
+			if(thisClass.state.rules && thisClass.state.rules.length > 0)
+			{
+				thisClass.state.rules.map(function(item, i){
+					if(item.Success && item.percentage) item.percentage = item.percentage+10;
+					if(item.percentage > 110)
+					{
+						thisClass.state.rules.pop(item);
+					}
+				});
+				thisClass.setState({});
+				
+			}		
+
+			thisClass.reRenderPercentages(thisClass);
+		}, 3000);
 	},
 
 	// _shuffle () {
@@ -101,6 +149,38 @@ const RulesListing = createReactClass({
 		clearInterval(this.interval);
     },
 
+	renderList(){
+		var items = this.state.rules;
+		if(items && items.length > 0)
+		{
+			//const percentage = 66;
+
+			let listing = items.map(function(item, i){
+				let successClass = item.Success ? "success" : "failure";
+				let itemClassName = "rule-block " + successClass;
+				let progress = "";
+				if(item.Success)
+				{
+					if(!item.percentage) item.percentage = 10;
+					progress = (<div className="progressbar"><CircularProgressbar strokeWidth="10" sqSize="200" percentage={item.percentage} className="success" /></div>);
+				}
+				return (<Rule className={itemClassName} key={item.Id}>
+							<div className="name">{item.Name}</div>
+							{progress}							
+						</Rule>
+					);
+			});
+
+			return (<ul className="rules-list">
+				<PoseGroup>
+					{listing}
+				</PoseGroup>
+			</ul>);
+		}
+		
+		return (null);
+	},
+
 	/**
 	 * Render the component to the ReactDOM.
 	 * @return {Object} JSX Expression.
@@ -110,8 +190,8 @@ const RulesListing = createReactClass({
 		if(this.props.visible && this.state.rules)
 		{
 			result = (
-                <div className="rules-dashboard2">
-					 <ItemList items={this.state.rules} />
+                <div className="rules-dashboard overlay">
+					 {this.renderList()}
                 </div>
             );
 		}

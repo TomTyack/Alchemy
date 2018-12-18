@@ -97,7 +97,7 @@ class AlchemyApp extends React.Component {
                         )}
                     </AlchemyContext.Consumer>
                     
-                    <GoButton id="goBtn" visible={true} />
+                    <GoButton id="goBtn" visible={!this.state.scanning} />
 
                     <ProgressBar id="progressBar" visible={false} />
                     

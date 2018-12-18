@@ -18,7 +18,7 @@ export class RuleDataService  {
     }
 
     ENDPOINTURL() {
-        return "http://fitnessfirst.dev.local/";
+        return "http://sc827/";
     }
 
     ReadRules() {
@@ -131,14 +131,17 @@ export class RuleDataService  {
                 thisClass.rulesStarted.splice(index, 1);
 
                 thisClass.rulesCompleted.push(match);
-                thisClass.dashboardPending.push(match);
+                
                 if(rule.data.Success)
                 {
+                    match.Success = true;
                     thisClass.rulesSucceeded.push(match);
                 }else if (rule.data && !rule.data.Success)
                 {
+                    match.Success = false;
                     thisClass.rulesSucceeded.push(match);
                 }
+                thisClass.dashboardPending.push(match);
                 thisClass.updateRuleListing();
             }
         });

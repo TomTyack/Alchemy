@@ -1,0 +1,55 @@
+body {
+  .rules-list{
+    margin-top: 20px;
+    margin-right: 35px;
+
+    .rule-block{
+
+      width: 100%;
+      
+      border-radius: 12px;
+      height: 50px;
+      font-weight: 500;
+      line-height: 1.2;
+      font-family: 'Gloria Hallelujah', cursive;
+      margin-top: 10px;
+
+
+      .progressbar{
+        width: 10%;
+        max-width: 30px;
+        float: left;
+        margin-top: 8px;
+        .success.CircularProgressbar{
+            .CircularProgressbar-path {
+              stroke: #1c7a32;
+            }
+        }
+      }
+
+      .name{
+        float: left;
+        min-width: 250px;
+        margin: 5px 0 5px 5px;
+        text-align: left;
+      }
+
+      &.success{
+        box-shadow: 0 0 20px #1c7a32;
+        border: 1px solid #1c7a32;
+        .name{
+          color: #1c7a32;
+        }
+      }
+
+      &.failure{
+        box-shadow: 0 0 20px #ba2b16;
+        border: 1px solid #ba2b16;
+        .name{
+          color: #ba2b16;
+        }
+      }
+    }
+  }
+  
+}
