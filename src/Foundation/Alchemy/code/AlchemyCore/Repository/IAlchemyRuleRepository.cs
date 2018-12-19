@@ -12,5 +12,6 @@ namespace Sitecore.Foundation.Alchemy.Repository
 	    IList GetRulesList();
 	    IAlchemyRule GetRule(string id);
         Task BeginProcessing(string id);
-	}
+        void Reset();
+    }
 }

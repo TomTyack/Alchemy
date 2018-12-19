@@ -11,9 +11,9 @@ namespace Sitecore.Foundation.AlchemyRules.Cache
 		public override void Run()
 		{
 			var siteInfoList = Sitecore.Configuration.Factory.GetSiteInfoList();
-			if (siteInfoList.Any(x => x.Name == Site))
+			if (siteInfoList.Any(x => x.Name.ToLower() == Site.ToLower()))
 			{
-				var site = siteInfoList.FirstOrDefault(x => x.Name == Site);
+				var site = siteInfoList.FirstOrDefault(x => x.Name.ToLower() == Site.ToLower());
 
 				// Mainly concerned about cache being increased on CD or Production servers if Config roles not enabled.
 				if (IsClientFacingProductionServer() && site.HtmlCache.InnerCache.MaxSize > 20000)

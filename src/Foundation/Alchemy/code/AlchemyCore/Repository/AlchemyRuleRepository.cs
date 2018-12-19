@@ -16,17 +16,22 @@ namespace Sitecore.Foundation.Alchemy.Repository
 
 		public AlchemyRuleRepository()
 		{
-			_ruleEngines = new List<IDefaultAlchmeyRuleSet>();
-			foreach (var configuration in AlchemyConfigurationManager.Configurations)
-			{
-				var ruleSet = configuration.Resolve<IDefaultAlchmeyRuleSet>();
-				ruleSet.Group = configuration.Name;
-				_ruleEngines.Add(ruleSet);
-			}
+		    RegisterRules();
 
-			//   var array = AlchemyConfigurationManager.Configurations.Select(configuration => configuration.Resolve<IDefaultAlchmeyRuleSet>()).ToArray();
-			//_ruleEngines = array.ToList();
+		    //   var array = AlchemyConfigurationManager.Configurations.Select(configuration => configuration.Resolve<IDefaultAlchmeyRuleSet>()).ToArray();
+		    //_ruleEngines = array.ToList();
 		}
+
+	    private void RegisterRules()
+	    {
+	        _ruleEngines = new List<IDefaultAlchmeyRuleSet>();
+	        foreach (var configuration in AlchemyConfigurationManager.Configurations)
+	        {
+	            var ruleSet = configuration.Resolve<IDefaultAlchmeyRuleSet>();
+	            ruleSet.Group = configuration.Name;
+	            _ruleEngines.Add(ruleSet);
+	        }
+        }
 
 		public int GetRulesCount()
 		{
@@ -43,7 +48,7 @@ namespace Sitecore.Foundation.Alchemy.Repository
 
 		public IAlchemyRule GetRule(string id)
 		{
-			return _ruleEngines.SelectMany(x => x.GetRulesList()).FirstOrDefault(x => x.UniqueId.ToLower() == id.ToLower());
+			return _ruleEngines.SelectMany(x => x.GetRulesList()).FirstOrDefault(x => x.Id == new Guid(id));
 		}
 
 		public async Task BeginProcessing(string id)
@@ -52,5 +57,10 @@ namespace Sitecore.Foundation.Alchemy.Repository
 			if (rule.Status == Status.Waiting)
 				await rule.RunAsync();
 		}
+
+	    public void Reset()
+	    {
+	        RegisterRules();
+	    }
 	}
 }

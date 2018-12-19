@@ -12,9 +12,9 @@ namespace Sitecore.Foundation.AlchemyRules.Cache
 	    {
 			var siteInfoList = Configuration.Factory.GetSiteInfoList();
 
-		    if (siteInfoList.Any(x => x.Name == Site))
+		    if (siteInfoList.Any(x => x.Name.ToLower() == Site.ToLower()))
 		    {
-			    var site = siteInfoList.FirstOrDefault(x => x.Name == Site);
+			    var site = siteInfoList.FirstOrDefault(x => x.Name.ToLower() == Site.ToLower());
 
 			    // Cache enabled when configuration roles not used, or on CD environments
 			    bool cacheEnabledAllSites = site.CacheHtml && (ConfigurationRole == ConfigurationRole.All || ConfigurationRole == ConfigurationRole.ContentDelivery);
@@ -30,7 +30,8 @@ namespace Sitecore.Foundation.AlchemyRules.Cache
 			    {
 				    Failed();
 			    }
-		    }
+		        Status = Status.Completed;
+            }
 		    else
 		    {
 			    Errored();

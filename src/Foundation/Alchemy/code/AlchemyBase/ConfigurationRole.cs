@@ -7,6 +7,7 @@
 		Reporting,
 		Custom,
 		ContentDelivery,
-		ContentManagement
+	    Standalone,
+        ContentManagement
 	}
 }

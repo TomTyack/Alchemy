@@ -28,9 +28,26 @@ namespace Sitecore.Foundation.Alchemy.Controller.API
         public HttpResponseMessage RunRulesEngine([FromUri] string ruleId)
         {                           
             AlchemyConfigurationManager.AlchemyRuleRepository.BeginProcessing(ruleId);
+            return Request.CreateResponse(HttpStatusCode.OK, new WebApiResponse<bool>(true));
+        }
 
-            return Request.CreateResponse(HttpStatusCode.OK,
-                new WebApiResponse<bool>(true));
+        [HttpGet]
+        //[BasicAuthentication("User", "ssLK")]
+        [Route("alchemy/api/rules/status/{ruleId}/")]
+        public HttpResponseMessage RulesStatus([FromUri] string ruleId)
+        {
+            var rule = AlchemyConfigurationManager.AlchemyRuleRepository.GetRule(ruleId);
+            return Request.CreateResponse(HttpStatusCode.OK, new WebApiResponse<IAlchemyRule>(rule));
+        }
+
+        [HttpGet]
+        //[BasicAuthentication("User", "ssLK")]
+        [Route("alchemy/api/rules/resetalchemy/")]
+        public HttpResponseMessage Reset()
+        {
+            AlchemyConfigurationManager.AlchemyRuleRepository.Reset();
+
+            return Request.CreateResponse(HttpStatusCode.OK, new WebApiResponse<bool>(true));
         }
 
         [HttpGet]

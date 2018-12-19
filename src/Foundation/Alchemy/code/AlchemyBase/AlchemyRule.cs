@@ -45,7 +45,14 @@ namespace Sitecore.Foundation.AlchemyBase
 		public async Task RunAsync()
 		{
 			await Task.Run(() => {
-				Run();
+			    try
+			    {
+			        Run();
+                }
+			    catch (Exception ex)
+			    {
+			        Sitecore.Diagnostics.Log.Error("Error running Alchemy Rule", ex);
+			    }
 			});
 		}
 

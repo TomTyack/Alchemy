@@ -71,17 +71,22 @@ class AlchemyApp extends React.Component {
     handleScanningData(thisClass)
     {
         var ruleDataService = new RuleDataService();
-        ruleDataService.SetEvents(thisClass.updateListing);
-        thisClass.props.data.rulesService = ruleDataService;
-        let rulesPromise = ruleDataService.beginProcessingRules();
-        
-        rulesPromise.then(function (result) {
-            thisClass.setState(state => ({
-                scanning: true,
-                waiting: false,
-                scanningCommenced: true
-            }));
-            ruleDataService.beginPollingRunningRules();
+        let resetComplete = ruleDataService.Reset();
+
+        resetComplete.then(function (result) {
+            ruleDataService.SetEvents(thisClass.updateListing);
+            thisClass.props.data.rulesService = ruleDataService;
+            let rulesPromise = ruleDataService.beginProcessingRules();
+            
+            rulesPromise.then(function (result) {
+                ruleDataService.startAllRules();
+                thisClass.setState(state => ({
+                    scanning: true,
+                    waiting: false,
+                    scanningCommenced: true
+                }));
+                ruleDataService.beginPollingRunningRules();
+            });
         });
     }
 

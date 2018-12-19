@@ -4,9 +4,9 @@ import axios from 'axios';
 export class RuleDataService  {
 
     constructor() {
-        this.rulesStarted = [];
-        
-        
+        this.rulesInitial = []; // Contains the rules initial read in from the configuration, not yet running
+        this.rulesStarted = []; // Contains the rules that have started running async in C#
+                
         this.ruleAlertsPending = [];// Used to show new toast alerts
         this.dashboardPending = []; // Used to show dashboard information blocks for completed rules
 
@@ -18,7 +18,7 @@ export class RuleDataService  {
     }
 
     ENDPOINTURL() {
-        return "http://fitnessfirst.dev.local/";
+        return "http://sc827/";
     }
 
     ReadRules() {
@@ -28,8 +28,23 @@ export class RuleDataService  {
         });
     }
 
-    ReadRule(ruleID) {
+    RunRule(ruleID) {
         const request = axios.get(this.ENDPOINTURL()+ `alchemy/api/rules/run/` + ruleID);
+        return request.then(res => {
+            res.Id = ruleID;
+            return res;
+        });
+    }
+
+    ReadRuleStatus(ruleID){
+        const request = axios.get(this.ENDPOINTURL()+ `alchemy/api/rules/status/` + ruleID);
+        return request.then(res => {
+            return res;
+        });
+    }
+
+    Reset(){
+        const request = axios.get(this.ENDPOINTURL()+ `alchemy/api/rules/resetalchemy/`);
         return request.then(res => {
             return res;
         });
@@ -73,12 +88,48 @@ export class RuleDataService  {
                 }
             }			
         }
-        this.rulesStarted = [];
-        this.rulesStarted =  rules.slice(0);
+        this.rulesInitial = [];
+        this.rulesInitial =  rules.slice(0);
         this.ruleAlertsPending = [];
         this.ruleAlertsPending = rules.slice(0); // track these to show the initial alerts
     }
     
+    /**
+     * Trigger off the rules to start running
+     * @param {*} data 
+     */
+    startAllRules(aClass)
+    {
+        let thisClass = this;
+        if(aClass)
+            thisClass = aClass;
+        for (var i = 0; i < thisClass.rulesInitial.length; i++){
+            var obj = thisClass.rulesInitial[i];
+            let rulesPromise = thisClass.RunRule(obj.Id);
+
+            rulesPromise.then(function (rule) {
+
+                let match = thisClass.rulesInitial.find((element) => {
+                    return element.Id === rule.Id;
+                });
+    
+                if(match && rule.data)
+                {
+                    var index = thisClass.rulesInitial.map(x => {
+                        return x.Id;
+                    }).indexOf(rule.Id);
+                    
+                    thisClass.rulesInitial.splice(index, 1);
+                    
+                    if(rule.data && rule.data.Success)
+                    {
+                        thisClass.rulesStarted.push(match);
+                    }
+                }
+            });
+        }
+    }
+
     /**
      * Kicks off a polling event to check for rules waiting from completion
      * @param {*} data 
@@ -113,33 +164,33 @@ export class RuleDataService  {
      * Given a rule call the API and verify if the rules has completed processing.
      * @param {*} rule 
      */
-    VerifyRulesStatus(originalRules, thisClass){
-        let rulesPromise = thisClass.ReadRule(originalRules.Id);
+    VerifyRulesStatus(originalRule, thisClass){
+        let rulesPromise = thisClass.ReadRuleStatus(originalRule.Id);
         
         rulesPromise.then(function (rule) {
 
             let match = thisClass.rulesStarted.find((element) => {
-                return element.Id === originalRules.Id;
+                return element.Id === originalRule.Id;
             });
 
-            if(match && rule.data)
+            if(match && rule.data && rule.data.Success && rule.data.Data.Status == "Completed")
             {
                 var index = thisClass.rulesStarted.map(x => {
                     return x.Id;
-                }).indexOf(originalRules.Id);
+                }).indexOf(originalRule.Id);
                 
                 thisClass.rulesStarted.splice(index, 1);
 
                 thisClass.rulesCompleted.push(match);
                 
-                if(rule.data.Success)
+                if(rule.data && rule.data.Data.CompletionStatus === "Pass")
                 {
                     match.Success = true;
                     thisClass.rulesSucceeded.push(match);
-                }else if (rule.data && !rule.data.Success)
+                }else if (rule.data && rule.data.Data.CompletionStatus === "Fail")
                 {
                     match.Success = false;
-                    thisClass.rulesSucceeded.push(match);
+                    thisClass.rulesFailed.push(match);
                 }
                 thisClass.dashboardPending.push(match);
                 thisClass.updateRuleListing();
