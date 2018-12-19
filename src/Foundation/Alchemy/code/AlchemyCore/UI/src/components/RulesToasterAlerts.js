@@ -33,7 +33,8 @@ const RulesToasterAlerts = createReactClass({
 	getDefaultProps: function() {
 		return {
 			data: {
-				runComplete: false
+				runComplete: false,
+				rulesKickedOff: false
 			},
 			dataService: {},
 			visible: false
@@ -58,6 +59,7 @@ const RulesToasterAlerts = createReactClass({
 		// Typical usage (don't forget to compare props):
 		if (!this.props.data.runComplete && this.props.dataService && this.props.dataService.ruleAlertsPending && this.props.dataService.ruleAlertsPending.length > 0) {
 			let pendingArray = this.props.dataService.ruleAlertsPending.slice(0);
+
 			this.setState({
 				rules: pendingArray
 			});
@@ -67,7 +69,11 @@ const RulesToasterAlerts = createReactClass({
 
 	kickOffRules(){
 		let thisClass = this;
-		thisClass.triggerIncrementally(thisClass.state.rules.length, null);
+		if(thisClass.state.rules && thisClass.state.rules.length > 0)
+		{
+			this.props.data.rulesKickedOff = true;
+			thisClass.triggerIncrementally(thisClass.state.rules.length, null);
+		}
     },
      
     triggerIncrementally : function theLoop (i, aClass) {
@@ -76,9 +82,12 @@ const RulesToasterAlerts = createReactClass({
 			thisClass = aClass;
 		setTimeout(function () {
             thisClass.triggerToast(thisClass.state.rules[i-1]);
-            if (--i) {                  // If i > 0, keep going
+            if (--i && i>0) {                  // If i > 0, keep going
                 theLoop(i, thisClass);  // Call the loop again
-            }
+			}else
+			{
+				thisClass.props.data.runComplete = true;
+			}
 		}, 1500);
 	  },
 
@@ -121,10 +130,11 @@ const RulesToasterAlerts = createReactClass({
 	 * @return {Object} JSX Expression.
 	 */
 	render() {
-		if(this.props.visible && !this.props.data.runComplete && this.state.rules && this.state.rules.length > 0)
+		if(this.props.visible && !this.props.data.runComplete)
 		{
-			this.props.data.runComplete = true;
-			this.kickOffRules();
+			if(!this.props.data.rulesKickedOff)
+				this.kickOffRules();
+
 			return (
 				<div>
 					<div id="interactive-board">
