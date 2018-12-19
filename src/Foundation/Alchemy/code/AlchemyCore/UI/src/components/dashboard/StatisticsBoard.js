@@ -81,8 +81,8 @@ const StatisticsBoard = createReactClass({
 				thisClass.props.data.progressPercentage = actualProgress;
 
 				thisClass.setState({});
-				thisClass.reRenderProgressPercentages(thisClass);
-			}else{
+				//thisClass.reRenderProgressPercentages(thisClass);
+			}else if(thisClass.props.data.showProgress){
 				thisClass.props.data.showProgress = false;
 				thisClass.setState({});
 			}			
@@ -102,7 +102,7 @@ const StatisticsBoard = createReactClass({
 				thisClass.props.data.passProgressPercentage = actualProgress;
 
 				thisClass.setState({});
-				thisClass.reRenderPassPercentages(thisClass);
+				//thisClass.reRenderPassPercentages(thisClass);
 			}		
 		}, 3000);
 	},
@@ -120,7 +120,7 @@ const StatisticsBoard = createReactClass({
 				thisClass.props.data.failedProgressPercentage = thisClass.getFailePercentage(thisClass);
 
 				thisClass.setState({});
-				thisClass.reRenderFailPercentages(thisClass);
+				//thisClass.reRenderFailPercentages(thisClass);
 			}		
 		}, 3000);
 	},
@@ -151,7 +151,7 @@ const StatisticsBoard = createReactClass({
 		{
 			if(thisClass.props.dataService.rulesSucceeded.length == 0)
 				return 0;
-					
+
 			return (thisClass.props.dataService.rulesCompleted.length / thisClass.props.dataService.rulesSucceeded.length) * 100;
 		}
 		else
