@@ -93,7 +93,7 @@ const StatisticsBoard = createReactClass({
 		let thisClass = this;
 		if(aClass) thisClass = aClass;
 		setTimeout(() => {
-			if(thisClass.props.data.passProgressPercentage < 100)
+			if(thisClass.props.data.passProgressPercentage < 100 && thisClass.props.data.showProgress)
 			{
 				let actualProgress = thisClass.getPassPercentage(thisClass);
 
@@ -111,7 +111,7 @@ const StatisticsBoard = createReactClass({
 		let thisClass = this;
 		if(aClass) thisClass = aClass;
 		setTimeout(() => {
-			if(thisClass.props.data.failedProgressPercentage < 100)
+			if(thisClass.props.data.failedProgressPercentage < 100 && thisClass.props.data.showProgress)
 			{
 				let actualProgress = thisClass.getFailePercentage(thisClass);
 
@@ -139,11 +139,10 @@ const StatisticsBoard = createReactClass({
 			return 100;
 
 		if(thisClass.props.dataService && thisClass.props.dataService.rulesCompleted)
-			return thisClass.props.dataService.rulesCompleted.length / thisClass.props.dataService.rulesStarted.length;
+			return Math.round(thisClass.props.dataService.rulesCompleted.length / thisClass.props.dataService.rulesStarted.length);
 		else
 			return 0;
 	},
-
 	
 	getPassPercentage(thisClass)
 	{
@@ -152,7 +151,7 @@ const StatisticsBoard = createReactClass({
 			if(thisClass.props.dataService.rulesSucceeded.length == 0)
 				return 0;
 
-			return (thisClass.props.dataService.rulesCompleted.length / thisClass.props.dataService.rulesSucceeded.length) * 100;
+			return Math.round((thisClass.props.dataService.rulesSucceeded.length  / thisClass.props.dataService.rulesCompleted.length) * 100);
 		}
 		else
 			return 0;
@@ -165,7 +164,7 @@ const StatisticsBoard = createReactClass({
 			if(thisClass.props.dataService.rulesFailed.length == 0)
 				return 0;
 
-			return (thisClass.props.dataService.rulesCompleted.length / thisClass.props.dataService.rulesFailed.length) * 100;
+			return Math.round((thisClass.props.dataService.rulesFailed.length / thisClass.props.dataService.rulesCompleted.length) * 100);
 		}
 		else
 			return 0;
@@ -181,18 +180,25 @@ const StatisticsBoard = createReactClass({
 		{
 			if(this.props.data.showProgress)
 			{
-				rulesStarted = (<div className="circ-container"><CircularProgressbar strokeWidth="10" sqSize="60" percentage={this.props.data.progressPercentage} text={"In Progress"} className="inprogress" /></div>);
+				rulesStarted = (<div className="circ-container"><CircularProgressbar strokeWidth="10" sqSize="60" percentage={this.props.data.progressPercentage} text={"In Progress"} className="inprogress" />
+				<div className="percentage-count inprogress text">{this.props.data.progressPercentage}%</div>
+				</div>
+				);
 			}
 		}
 
 		if (this.props.dataService && this.props.dataService.rulesFailed) 
 		{
-			rulesPass = (<div className="circ-container"><CircularProgressbar strokeWidth="10" sqSize="60" percentage={this.props.data.passProgressPercentage} text={"Pass"} className="success" /></div>);
+			rulesPass = (<div className="circ-container"><CircularProgressbar strokeWidth="10" sqSize="60" percentage={this.props.data.passProgressPercentage} text={"Pass"} className="success" />
+			<div className="percentage-count success text">{this.props.data.passProgressPercentage}%</div>
+			</div>);
 		}
 
 		if (this.props.dataService && this.props.dataService.rulesSucceeded) 
 		{
-			rulesFailed = (<div className="circ-container"><CircularProgressbar strokeWidth="10" sqSize="60" percentage={this.props.data.failedProgressPercentage} text={"Fail"} className="failure" /></div>);
+			rulesFailed = (<div className="circ-container"><CircularProgressbar strokeWidth="10" sqSize="60" percentage={this.props.data.failedProgressPercentage} text={"Fail"} className="failure" />
+			<div className="percentage-count failure text">{this.props.data.failedProgressPercentage}%</div>
+			</div>);
 		}
 
 		return (

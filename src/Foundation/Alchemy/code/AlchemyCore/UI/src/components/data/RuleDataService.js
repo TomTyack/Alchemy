@@ -193,7 +193,7 @@ export class RuleDataService  {
                     thisClass.rulesFailed.push(match);
                 }
                 thisClass.dashboardPending.push(match);
-                thisClass.updateRuleListing();
+                thisClass.updateRuleListing(); // Calls set state in the main screen index.js  to trigger a component refresh down the tree
             }
         });
     }

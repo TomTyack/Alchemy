@@ -17,10 +17,23 @@ body {
 
         .CircularProgressbar{
           max-height: 150px;
-          text{
+          text, .text{
             font-family: $cl__font;
             font-size: 12px;
           }
+        }
+        .text{
+          font-family: $cl__font;
+          font-size: 18px;
+        }
+        .percentage-count.success{
+          color: $cl__green;
+        }
+        .percentage-count.failure{
+          color: $cl__red;
+        }
+        .percentage-count.inprogress{
+          color: $cl__yellow;
         }
       }
       .success.CircularProgressbar{
@@ -103,4 +116,18 @@ body {
     }
   }
   
+
+  .container{
+    .Toastify{
+      .Toastify__toast-container{
+        .Toastify__toast{
+          background-color: $cl__grey;
+        }
+      }
+    }
+  }
+
+
+
+
 }

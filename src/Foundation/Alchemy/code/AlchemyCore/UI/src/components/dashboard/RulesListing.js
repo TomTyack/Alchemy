@@ -62,30 +62,37 @@ const RulesListing = createReactClass({
 	 */
 	getDefaultProps: function() {
 		return {
-			data: {},
+			data: {
+				reRenderBookedIn: false
+			},
 			dataService: {},
             visible: false
 		};
 	},
 
 	componentDidUpdate(prevProps) {
-		// Typical usage (don't forget to compare props):
-		if (this.props.dataService && this.props.dataService.dashboardPending && this.props.dataService.dashboardPending.length > 0) {
+
+		if(this.props.visible)
+		{
+			if (this.props.dataService && this.props.dataService.dashboardPending && this.props.dataService.dashboardPending.length > 0) {
 			
-			// Construct an array with all pending items
-			let pendingArray = this.props.dataService.dashboardPending.slice(0);
+				// Construct an array with all pending items
+				let pendingArray = this.props.dataService.dashboardPending.slice(0);
+	
+				if(this.props.data.pendingArray)
+					pendingArray = pendingArray.concat(this.props.data.pendingArray)
 
-			if(this.props.data.pendingArray)
-			pendingArray = pendingArray.concat(this.props.data.pendingArray)
-				//pendingArray.push(this.props.data.pendingArray); // Add existing items already in the state
+				this.props.data.pendingArray = pendingArray.slice(0);
+	
+				this.props.dataService.dashboardPending = [];
+				this.setState({
+					rules: this.props.data.pendingArray
+				});
+			}
 
-			this.props.data.pendingArray = pendingArray.slice(0);
-
-			this.props.dataService.dashboardPending = [];
-			this.setState({
-				rules: this.props.data.pendingArray
-			});
-		}
+			if(!this.props.data.reRenderBookedIn)
+				this.reRenderPercentages();
+		}	
 	},
 
 	/**
@@ -93,53 +100,51 @@ const RulesListing = createReactClass({
 	 * @return {null} Method doesn't return a value.
 	 */
 	componentDidMount() {
-		//this.interval = setInterval(this._shuffle, 2000);
-
-		// if(this.state.rules)
-		// {
-		// 	setTimeout(() => {
-		// 		this.setState({
-		// 		  rules: this.state.rules.concat([{ id: 5, text: "See how I fade in?" }])
-		// 		});
-		// 	  }, 3000);
-		  
-		// 	  setTimeout(() => {
-		// 		this.setState({
-		// 		  rules: [{ id: 6, text: "Can also fade in on top" }].concat(
-		// 			this.state.rules
-		// 		  )
-		// 		});
-		// 	  }, 6000);
-		// }
-		this.reRenderPercentages();
+		
 	},
 
 	reRenderPercentages(aClass){
 		let thisClass = this;
 		if(aClass)
 			thisClass = aClass;
-		setTimeout(() => {
 
+		if(thisClass.props.data.reRenderBookedIn)
+			return;
+
+		//setTimeout(() => {
 			if(thisClass.state.rules && thisClass.state.rules.length > 0)
 			{
-				thisClass.state.rules.map(function(item, i){
-					if(item.Success && item.percentage) item.percentage = item.percentage+10;
-					if(item.percentage > 110)
+				var index = thisClass.state.rules.map(x => {
+					return x.Success;
+				}).indexOf(true);
+				if(index >= 0)
+				{
+					thisClass.state.rules.map(function(item, i){
+						if(item.Success && item.percentage){
+							item.percentage = item.percentage+10;
+							if(item.percentage > 110)
+							{
+								thisClass.state.rules.pop(item);
+							}
+						} 
+					});
+					
+					thisClass.setState({});
+					
+					if(!thisClass.props.data.reRenderBookedIn)
 					{
-						thisClass.state.rules.pop(item);
+						thisClass.props.data.reRenderBookedIn = true;
+						setTimeout(() => {
+							thisClass.props.data.reRenderBookedIn = false;
+							thisClass.reRenderPercentages(thisClass);
+						}, 3000);
 					}
-				});
-				thisClass.setState({});
-				
+				}
 			}		
 
-			thisClass.reRenderPercentages(thisClass);
-		}, 3000);
+			//thisClass.reRenderPercentages(thisClass);
+		//}, 3000);
 	},
-
-	// _shuffle () {
-	// 	this.setState({ rules: shuffle(this.state.rules) });
-	// },
 
 	/**
 	 * Method called when component will successfully unmount from the ReactDOM.
