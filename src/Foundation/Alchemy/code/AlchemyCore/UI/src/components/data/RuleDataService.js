@@ -18,7 +18,7 @@ export class RuleDataService  {
     }
 
     ENDPOINTURL() {
-        return "http://sc827/";
+        return "http://fitnessfirst.dev.local/";
     }
 
     ReadRules() {

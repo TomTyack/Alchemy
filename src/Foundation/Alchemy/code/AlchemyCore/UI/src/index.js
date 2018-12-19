@@ -12,7 +12,7 @@ import {AlchemyContext} from './components/AlchemyContext';
 import RulesToasterAlerts from './components/RulesToasterAlerts';
 
 import RulesListing from './components/dashboard/RulesListing';
-
+import StatisticsBoard from './components/dashboard/StatisticsBoard';
 
 class AlchemyApp extends React.Component {
 
@@ -59,7 +59,8 @@ class AlchemyApp extends React.Component {
           // The waiting state, show the Go button ready to go
           this.toggleWaiting = (val) => {
             this.setState(state => ({
-                waiting: val
+                waiting: val,
+                loading: false
               }));
           };
     }
@@ -85,7 +86,11 @@ class AlchemyApp extends React.Component {
     }
 
     render() {
+
+        let showGoButton = !(this.state.scanning || this.state.loading);
+
         return (
+
         <AlchemyContext.Provider value={this.state}>
             <div>
                 <Header/>
@@ -97,13 +102,16 @@ class AlchemyApp extends React.Component {
                         )}
                     </AlchemyContext.Consumer>
                     
-                    <GoButton id="goBtn" visible={!this.state.scanning} />
+                    <GoButton id="goBtn" visible={showGoButton} />
 
                     <ProgressBar id="progressBar" visible={false} />
                     
                     <RulesToasterAlerts id="rulesToaster" visible={this.state.scanning} dataService={this.props.data.rulesService} />
-
-                    <RulesListing id="rulesListing" visible={this.state.scanningCommenced} dataService={this.props.data.rulesService} />
+                    
+                    <div className={"ui-dashboards"}>
+                        <StatisticsBoard id="statisticsBoard" visible={this.state.scanningCommenced} dataService={this.props.data.rulesService} />
+                        <RulesListing id="rulesListing" visible={this.state.scanningCommenced} dataService={this.props.data.rulesService} />
+                    </div>
 
                 </div>
             </div>
